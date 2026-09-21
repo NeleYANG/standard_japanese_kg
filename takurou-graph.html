@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>知识图谱 · 本质日语 Takurou</title>
+<meta name="description" content="本质日语 Takurou 日语知识图谱：130 个原子知识点按《新版中日交流标准日本语》五册分层排成富士山形，可查看先修链、所属课时与掌握证据。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   本质日语 Takurou · 知识图谱页
+   同一套令牌：深棕基底 · 青海波暗纹 · 暗底和色
+   ============================================================ */
+:root{
+  --bn-0:#1A110C; --bn-1:#241811; --bn-2:#2D1F16; --bn-3:#3D2B1E; --bn-4:#513A28;
+  --cream:#F2E8D5; --cream-2:#D2C3A9; --cream-3:#A0907A;
+  --ai:#7FA8D8; --mizu:#7FC0C4; --shu:#E4735C; --shu-2:#CE4B33;
+  --kin:#D9B25F; --kin-2:#A8874A; --fuji:#B49BD8;
+  --line:rgba(217,178,95,.17); --line-soft:rgba(217,178,95,.09);
+  --mincho:"Shippori Mincho B1","Hiragino Mincho ProN","Songti SC","Noto Serif JP",serif;
+  --gothic:"Zen Kaku Gothic New",-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans",sans-serif;
+  --latin:"Cormorant Garamond",Georgia,serif;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --bar:62px; --foot:46px; --panel:392px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bn-1);color:var(--cream);overflow:hidden;
+  font-family:var(--gothic);font-size:15px;line-height:1.7;
+  font-feature-settings:"palt" 1;-webkit-font-smoothing:antialiased;
+}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+input{font:inherit;color:inherit}
+a{color:inherit;text-decoration:none}
+::selection{background:rgba(206,75,51,.42);color:#FFF3EC}
+:focus-visible{outline:2px solid var(--kin);outline-offset:3px;border-radius:2px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* ---------- 背景：青海波 + 聚光 + 噪点 ---------- */
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none}
+.bg-seigaiha{
+  position:absolute;inset:0;opacity:.2;background-size:60px 60px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='%23241811' stroke='%23C9A15F' stroke-opacity='.52' stroke-width='1'%3E%3Ccircle cx='30' cy='0' r='30'/%3E%3Ccircle cx='30' cy='0' r='22'/%3E%3Ccircle cx='30' cy='0' r='14'/%3E%3Ccircle cx='30' cy='0' r='6'/%3E%3Ccircle cx='0' cy='30' r='30'/%3E%3Ccircle cx='0' cy='30' r='22'/%3E%3Ccircle cx='0' cy='30' r='14'/%3E%3Ccircle cx='0' cy='30' r='6'/%3E%3Ccircle cx='60' cy='30' r='30'/%3E%3Ccircle cx='60' cy='30' r='22'/%3E%3Ccircle cx='60' cy='30' r='14'/%3E%3Ccircle cx='60' cy='30' r='6'/%3E%3Ccircle cx='30' cy='60' r='30'/%3E%3Ccircle cx='30' cy='60' r='22'/%3E%3Ccircle cx='30' cy='60' r='14'/%3E%3Ccircle cx='30' cy='60' r='6'/%3E%3C/g%3E%3C/svg%3E");
+}
+.bg-glow{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(48% 44% at 60% 62%, rgba(217,178,95,.09), rgba(217,178,95,0) 66%),
+    radial-gradient(70% 50% at 50% 118%, rgba(206,75,51,.10), rgba(206,75,51,0) 62%),
+    radial-gradient(130% 108% at 50% 44%, rgba(26,17,12,0) 30%, rgba(26,17,12,.55) 76%, rgba(26,17,12,.86) 100%);
+}
+.bg-grain{
+  position:absolute;inset:0;opacity:.38;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.06'/%3E%3C/svg%3E");
+}
+
+/* ---------- 顶栏 ---------- */
+.app{position:relative;z-index:2;height:100dvh;display:grid;grid-template-rows:var(--bar) 1fr var(--foot);overflow:hidden}
+.bar{
+  display:flex;align-items:center;gap:18px;padding:0 20px;
+  border-bottom:1px solid var(--line-soft);background:rgba(26,17,12,.62);backdrop-filter:blur(10px);
+}
+.brand{display:flex;align-items:center;gap:11px;flex:none}
+.hanko{
+  display:grid;place-items:center;width:34px;height:34px;border-radius:5px;
+  background:var(--shu-2);color:#FFF6EC;font-family:var(--mincho);font-weight:700;font-size:17px;
+  box-shadow:inset 0 1px 0 rgba(255,246,236,.22),0 6px 16px -10px rgba(206,75,51,.9);
+}
+.brand-txt{display:flex;flex-direction:column;line-height:1.15}
+.brand-txt b{font-family:var(--mincho);font-size:16px;font-weight:700;letter-spacing:.06em}
+.brand-txt span{font-family:var(--latin);font-size:11px;letter-spacing:.2em;color:var(--kin-2);text-transform:uppercase}
+.brand-sub{font-size:11.5px;color:var(--cream-3);letter-spacing:.12em;padding-left:14px;border-left:1px solid var(--line);margin-left:2px}
+
+/* 搜索 */
+.search{position:relative;flex:1;max-width:420px;min-width:150px}
+.search input{
+  width:100%;height:38px;padding:0 34px 0 34px;border-radius:19px;
+  background:rgba(45,31,22,.72);border:1px solid var(--line);color:var(--cream);
+  font-size:13.5px;transition:border-color .22s ease,background-color .22s ease;
+}
+.search input::placeholder{color:var(--cream-3)}
+.search input:focus{outline:none;border-color:rgba(217,178,95,.5);background:rgba(45,31,22,.95)}
+.search-ico{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:13px;height:13px;border:1.5px solid var(--kin-2);border-radius:50%;pointer-events:none}
+.search-ico::after{content:"";position:absolute;right:-4px;bottom:-4px;width:5px;height:1.5px;background:var(--kin-2);transform:rotate(45deg)}
+.search kbd{position:absolute;right:11px;top:50%;transform:translateY(-50%);font-size:10.5px;color:var(--cream-3);border:1px solid var(--line);border-radius:3px;padding:1px 5px;pointer-events:none}
+.results{
+  position:absolute;left:0;right:0;top:44px;z-index:60;max-height:328px;overflow:auto;
+  background:rgba(36,24,17,.98);border:1px solid var(--line);border-radius:6px;
+  box-shadow:0 24px 48px -20px rgba(0,0,0,.9);padding:5px;display:none;
+}
+.results.on{display:block}
+.results li{list-style:none}
+.results button{
+  display:flex;align-items:baseline;gap:10px;width:100%;text-align:left;
+  padding:8px 11px;border-radius:4px;font-size:13.5px;
+}
+.results button:hover,.results button:focus-visible{background:rgba(217,178,95,.13);outline:none}
+.results .rj{font-family:var(--mincho);font-weight:600;flex:none}
+.results .rc{color:var(--cream-3);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.results .rl{margin-left:auto;font-size:11px;color:var(--kin-2);flex:none}
+.results .empty{padding:12px;color:var(--cream-3);font-size:13px}
+
+/* 等级切换 */
+.tabs{display:flex;gap:2px;padding:3px;border:1px solid var(--line-soft);border-radius:6px;flex:none;background:rgba(45,31,22,.5)}
+.tabs button{
+  padding:5px 11px;border-radius:4px;font-size:12.5px;color:var(--cream-3);
+  font-family:var(--latin);font-size:14px;letter-spacing:.06em;
+  transition:background-color .2s ease,color .2s ease;
+}
+.tabs button:hover{color:var(--cream)}
+.tabs button[aria-pressed="true"]{background:rgba(217,178,95,.16);color:var(--kin)}
+.tabs button.all{font-family:var(--gothic);font-size:12.5px;letter-spacing:.08em}
+
+.bar-right{display:flex;align-items:center;gap:10px;flex:none;margin-left:auto}
+.icon-btn{
+  width:34px;height:34px;border-radius:5px;border:1px solid var(--line-soft);
+  display:grid;place-items:center;color:var(--cream-2);font-size:15px;
+  transition:background-color .2s ease,color .2s ease,border-color .2s ease;
+}
+.icon-btn:hover{background:rgba(217,178,95,.12);color:var(--kin);border-color:var(--line)}
+.status{
+  display:flex;align-items:center;gap:8px;height:32px;padding:0 13px;border-radius:16px;
+  border:1px solid var(--line-soft);font-size:12px;color:var(--cream-2);
+  max-width:300px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--kin);flex:none;box-shadow:0 0 8px rgba(217,178,95,.9);animation:breathe 3.4s var(--ease) infinite}
+@keyframes breathe{0%,100%{opacity:1}50%{opacity:.36}}
+.back-link{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--cream-3);letter-spacing:.06em;transition:color .24s ease}
+.back-link:hover{color:var(--kin)}
+.back-link .arw{font-family:var(--latin);font-size:14px;line-height:1;transition:transform .3s var(--ease)}
+.back-link:hover .arw{transform:translateX(-3px)}
+
+/* ---------- 图谱场 ---------- */
+.field{position:relative;overflow:hidden}
+#kg{width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+#kg.panning{cursor:grabbing}
+#kg:focus-visible{outline:none}
+.world{will-change:transform}
+
+/* 边 */
+.edge{fill:none;stroke-linecap:round;transition:stroke-opacity .28s ease,stroke .28s ease,stroke-width .28s ease}
+.edge-hard{stroke:#C9744F;stroke-opacity:.155;stroke-width:1}
+.edge-soft{stroke:#9C8A63;stroke-opacity:.075;stroke-width:.8;stroke-dasharray:3 3.6}
+.edge-seq{stroke:var(--kin);stroke-opacity:.05;stroke-width:.8;stroke-dasharray:1.6 4}
+.edge.is-lit{stroke:var(--shu);stroke-opacity:.95;stroke-width:1.9;stroke-dasharray:none}
+.edge.is-lit.soft{stroke:var(--kin);stroke-opacity:.85}
+.edge.is-dim{stroke-opacity:.03;stroke-dasharray:none}
+
+/* 节点 */
+.nm{cursor:pointer}
+.nm .halo{fill:none;stroke-width:2;opacity:0;transition:opacity .3s ease}
+.nm .nd{transition:fill-opacity .3s ease,stroke-opacity .3s ease,stroke-width .26s ease}
+.nm .pulse{fill:none;opacity:0;transform-box:fill-box;transform-origin:center;pointer-events:none}
+.nm .nl{
+  font-family:var(--mincho);font-weight:600;font-size:11px;
+  fill:var(--cream-2);text-anchor:middle;paint-order:stroke;
+  stroke:rgba(26,17,12,.92);stroke-width:3.2px;stroke-linejoin:round;
+  opacity:0;transition:opacity .28s ease;pointer-events:none;
+}
+.nm.has-label .nl{opacity:.82}
+.nm:hover .nl,.nm.is-on .nl,.nm.is-focus .nl{opacity:1}
+.nm:hover .nd,.nm.is-on .nd{stroke-width:2.6}
+.nm.is-on .halo,.nm.is-focus .halo{opacity:.9}
+.nm.is-dim{opacity:.16}
+.nm.is-dim .nl{opacity:0}
+@keyframes pulse{0%{transform:scale(.75);opacity:.72}70%{transform:scale(1.9);opacity:0}100%{transform:scale(1.9);opacity:0}}
+.nm.is-on .pulse{animation:pulse 2.4s var(--ease) infinite}
+
+/* 山之轮廓与层标 */
+.mtn-body{fill:url(#mtnFill);stroke:rgba(217,178,95,.17);stroke-width:1}
+.mtn-cap{fill:#F2E8D5;fill-opacity:.055;stroke:none}
+.mtn-base{stroke:rgba(168,135,74,.32);stroke-width:1}
+.level-line{stroke:rgba(217,178,95,.085);stroke-width:1;stroke-dasharray:1.5 6}
+.level-tag{font-family:var(--latin);font-size:16px;fill:var(--kin-2);text-anchor:end;letter-spacing:.1em}
+.level-note{font-family:var(--gothic);font-size:10.5px;fill:var(--cream-3);text-anchor:end;letter-spacing:.06em;opacity:.8}
+.level-bar{stroke:rgba(217,178,95,.34);stroke-width:1.5}
+
+/* ---------- 浮层 dock ---------- */
+.dock{
+  position:absolute;z-index:20;border:1px solid var(--line);border-radius:8px;
+  background:rgba(32,21,15,.86);backdrop-filter:blur(12px);
+  box-shadow:0 22px 46px -26px rgba(0,0,0,.95);
+}
+.dock-head{display:flex;align-items:baseline;gap:10px;padding:12px 14px 10px}
+.dock-kicker{font-size:10.5px;color:var(--kin-2);letter-spacing:.18em;text-transform:uppercase;font-family:var(--latin)}
+.dock-head strong{font-family:var(--mincho);font-size:14px;font-weight:600;letter-spacing:.06em}
+.dock-head .link{margin-left:auto;font-size:11.5px;color:var(--cream-3);text-decoration:underline;text-underline-offset:3px}
+.dock-head .link:hover{color:var(--kin)}
+
+.dock-domain{left:20px;top:20px;width:212px;padding-bottom:12px}
+.chips{display:flex;flex-direction:column;gap:4px;padding:0 10px}
+.tips{margin:11px 10px 0;padding-top:9px;border-top:1px solid var(--line-soft);display:flex;flex-direction:column;gap:3px}
+.tips p{margin:0;font-size:11px;color:var(--cream-3);letter-spacing:.02em;line-height:1.6}
+.tips b{color:var(--cream-2);font-weight:600}
+.chip{
+  display:flex;align-items:center;gap:9px;padding:7px 9px;border-radius:5px;
+  font-size:13px;color:var(--cream-2);text-align:left;width:100%;
+  transition:background-color .2s ease,color .2s ease;
+}
+.chip:hover{background:rgba(217,178,95,.1)}
+.chip[aria-pressed="true"]{background:rgba(217,178,95,.16);color:var(--cream)}
+.chip .sw{width:9px;height:9px;border-radius:50%;flex:none;box-shadow:0 0 0 1px rgba(26,17,12,.7) inset}
+.chip .n{margin-left:auto;font-family:var(--latin);font-size:13px;color:var(--cream-3)}
+.chip[aria-pressed="true"] .n{color:var(--kin)}
+
+/* 进度条：单行紧凑，只占底部 80px，避免压住山脚 */
+.dock-progress{left:50%;transform:translateX(-50%);bottom:14px;width:min(780px,calc(100% - 320px));padding:10px 15px 8px}
+.prog-head{display:flex;align-items:baseline;gap:11px}
+.prog-head .who{font-family:var(--mincho);font-size:14px;font-weight:600;letter-spacing:.04em;white-space:nowrap}
+.prog-head .main{font-size:12px;color:var(--cream-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prog-counts{margin-left:auto;font-size:11.5px;color:var(--cream-3);white-space:nowrap;letter-spacing:.04em}
+.prog-counts b{font-family:var(--latin);font-size:14.5px;color:var(--kin);font-weight:600}
+.rail{position:relative;height:20px;margin-top:5px}
+.rail-track{position:absolute;left:0;right:0;top:8px;height:3px;border-radius:2px;background:rgba(217,178,95,.16)}
+.rail-fill{position:absolute;left:0;top:8px;height:3px;border-radius:2px;background:linear-gradient(90deg,rgba(217,178,95,.5),var(--kin))}
+.rail input{position:absolute;inset:0;width:100%;margin:0;opacity:0;cursor:pointer}
+.rail-knob{
+  position:absolute;top:3px;width:13px;height:13px;border-radius:50%;background:var(--kin);
+  border:2px solid var(--bn-1);transform:translateX(-50%);pointer-events:none;
+  box-shadow:0 0 0 3px rgba(217,178,95,.18),0 3px 8px -2px rgba(0,0,0,.8);
+}
+.ticks{position:relative;height:12px;margin-top:2px}
+.ticks span{position:absolute;top:0;font-size:10px;color:var(--cream-3);transform:translateX(-50%);white-space:nowrap;letter-spacing:.04em}
+.play{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;color:var(--cream-3);border:1px solid var(--line);border-radius:13px;padding:3px 10px}
+.play:hover{color:var(--kin);border-color:var(--line)}
+.play[aria-pressed="true"]{color:var(--kin);border-color:rgba(217,178,95,.5)}
+
+/* 图例 */
+.legend{position:absolute;right:20px;top:20px;z-index:20;padding:11px 13px;display:flex;flex-direction:column;gap:7px;transition:opacity .3s ease,transform .3s ease}
+body.panel-open .legend{opacity:0;transform:translateX(14px);pointer-events:none}
+.legend span{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--cream-3)}
+.legend i{width:22px;height:0;flex:none;display:block}
+.lg-hard{border-top:2px solid #C9744F}
+.lg-soft{border-top:2px dashed #9C8A63}
+.lg-seq{border-top:2px dotted var(--kin)}
+
+/* 提示条（视觉上并入左侧面板，此处仅作无障碍播报） */
+.tip{
+  position:absolute;z-index:40;pointer-events:none;opacity:0;transform:translate(-50%,-120%);
+  background:rgba(242,232,213,.97);color:#2A1B12;border-radius:5px;padding:7px 11px;
+  box-shadow:0 14px 30px -14px rgba(0,0,0,.9);transition:opacity .16s ease;
+  max-width:280px;white-space:nowrap;
+}
+.tip.on{opacity:1}
+.tip b{display:block;font-family:var(--mincho);font-size:13.5px;letter-spacing:.02em}
+.tip i{display:block;font-style:normal;font-size:11px;color:#6B5540;margin-top:2px}
+
+/* 空态 */
+.gate{
+  position:absolute;inset:0;z-index:30;display:none;place-items:center;text-align:center;
+  background:rgba(26,17,12,.72);backdrop-filter:blur(3px);
+}
+.gate.on{display:grid}
+.gate p{font-size:13.5px;color:var(--cream-2);max-width:34ch}
+.gate b{display:block;font-family:var(--mincho);font-size:17px;margin-bottom:6px;color:var(--cream)}
+
+/* ---------- 右侧详情面板 ---------- */
+.panel{
+  position:absolute;z-index:50;top:12px;right:12px;bottom:12px;width:var(--panel);
+  display:flex;flex-direction:column;border:1px solid var(--line);border-radius:9px;
+  background:rgba(31,20,14,.95);backdrop-filter:blur(16px);
+  box-shadow:0 30px 70px -30px rgba(0,0,0,.98);
+  transform:translateX(calc(100% + 24px));transition:transform .42s var(--ease);
+}
+.panel.on{transform:none}
+.panel-bar{display:flex;align-items:center;gap:10px;padding:13px 14px;border-bottom:1px solid var(--line-soft);flex:none}
+.panel-bar span{font-size:10.5px;letter-spacing:.18em;color:var(--kin-2);font-family:var(--latin);text-transform:uppercase}
+.panel-bar .close{margin-left:auto;width:28px;height:28px;border-radius:5px;color:var(--cream-3);display:grid;place-items:center;font-size:17px}
+.panel-bar .close:hover{background:rgba(217,178,95,.14);color:var(--cream)}
+.panel-scroll{overflow:auto;padding:18px 16px 24px;flex:1;overscroll-behavior:contain}
+
+.p-head{margin-bottom:16px}
+.p-kind{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--cream-3);margin-bottom:9px;letter-spacing:.06em}
+.p-kind .sw{width:9px;height:9px;border-radius:50%;flex:none}
+.p-kind .lv{font-family:var(--latin);font-size:12.5px;color:var(--kin);letter-spacing:.1em}
+.p-jp{font-family:var(--mincho);font-size:25px;font-weight:700;line-height:1.35;margin:0 0 5px;color:var(--cream);word-break:break-word}
+.p-cn{font-size:14px;color:var(--kin);margin:0;letter-spacing:.04em}
+.p-desc{font-size:13.5px;color:var(--cream-2);line-height:1.85;margin:14px 0 0}
+
+.p-sec{margin-top:22px;border-top:1px solid var(--line-soft);padding-top:16px}
+.p-sec h3{
+  display:flex;align-items:center;gap:8px;margin:0 0 11px;font-size:12.5px;font-weight:600;
+  letter-spacing:.1em;color:var(--cream-2);font-family:var(--gothic);
+}
+.p-sec h3 em{font-family:var(--latin);font-style:normal;font-size:13px;color:var(--kin-2);letter-spacing:.06em}
+.p-sec h3 .cnt{margin-left:auto;font-family:var(--latin);font-size:13px;color:var(--cream-3)}
+
+.lesson-card{background:rgba(45,31,22,.6);border:1px solid var(--line-soft);border-radius:6px;padding:12px 13px}
+.lesson-card b{font-family:var(--mincho);font-size:15px;font-weight:600;display:block}
+.lesson-card p{margin:5px 0 0;font-size:12.5px;color:var(--cream-3)}
+.lesson-card .lesson-no{font-family:var(--latin);font-size:12.5px;color:var(--kin);letter-spacing:.1em}
+.siblings{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
+.sib{font-size:12px;padding:4px 10px;border-radius:12px;border:1px solid var(--line);color:var(--cream-2);transition:background-color .2s ease,color .2s ease}
+.sib:hover{background:rgba(217,178,95,.14);color:var(--cream)}
+.sib.cur{background:rgba(217,178,95,.18);border-color:rgba(217,178,95,.4);color:var(--kin)}
+.sib[data-dim="1"]{opacity:.5}
+
+.rel{display:flex;flex-direction:column;gap:5px}
+.rel button{
+  display:flex;align-items:baseline;gap:9px;width:100%;text-align:left;padding:8px 10px;
+  border-radius:5px;border:1px solid transparent;background:rgba(45,31,22,.42);
+  transition:background-color .2s ease,border-color .2s ease,transform .2s ease;
+}
+.rel button:hover{background:rgba(217,178,95,.13);border-color:var(--line);transform:translateX(2px)}
+.rel .rj{font-family:var(--mincho);font-size:13.5px;font-weight:600;flex:none}
+.rel .rc{font-size:11.5px;color:var(--cream-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rel .rt{margin-left:auto;font-size:10.5px;color:var(--cream-3);flex:none;letter-spacing:.06em;padding-left:6px}
+.rel .rt.hard{color:#D9917A}
+.rel-none{font-size:12.5px;color:var(--cream-3);font-style:italic}
+
+.evi{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.evi li{position:relative;padding-left:17px;font-size:13px;color:var(--cream-2);line-height:1.75}
+.evi li::before{content:"";position:absolute;left:2px;top:8px;width:6px;height:6px;border-radius:1px;background:var(--kin-2);transform:rotate(45deg)}
+.ex{background:rgba(217,178,95,.06);border-left:2px solid var(--kin-2);border-radius:0 5px 5px 0;padding:11px 13px;margin-top:9px}
+.ex p{margin:0;font-family:var(--mincho);font-size:14.5px;line-height:1.8;color:var(--cream)}
+.ex p+p{margin-top:7px}
+.ex cn,.ex em{display:block;font-family:var(--gothic);font-style:normal;font-size:12px;color:var(--cream-3);margin-top:4px;letter-spacing:.02em}
+.pit{display:flex;gap:9px;margin-top:11px;font-size:12.5px;color:#E8B49C;line-height:1.7}
+.pit b{flex:none;font-size:10.5px;letter-spacing:.1em;color:#D9917A;border:1px solid rgba(217,145,122,.4);border-radius:3px;padding:1px 5px;height:fit-content;margin-top:2px}
+.p-acts{display:flex;gap:8px;margin-top:18px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:38px;padding:0 15px;
+  border-radius:4px;font-size:12.5px;font-weight:600;letter-spacing:.06em;border:1px solid transparent;
+  transition:background-color .2s ease,color .2s ease,border-color .2s ease,transform .2s ease;
+}
+.btn-line{border-color:rgba(228,115,92,.5);color:var(--shu)}
+.btn-line:hover{background:var(--shu-2);border-color:var(--shu-2);color:#FFF6EC;transform:translateY(-1px)}
+.btn-ghost{border-color:var(--line);color:var(--cream-2)}
+.btn-ghost:hover{background:rgba(217,178,95,.13);color:var(--cream)}
+.p-empty{padding:44px 8px;text-align:center;color:var(--cream-3)}
+.p-empty .ring{display:block;width:46px;height:46px;margin:0 auto 16px;border-radius:50%;border:1px solid var(--line)}
+.p-empty b{display:block;font-family:var(--mincho);font-size:15px;color:var(--cream-2);margin-bottom:6px}
+.p-empty p{margin:0;font-size:12.5px;line-height:1.8}
+
+/* ---------- 页脚 ---------- */
+.foot{
+  display:flex;align-items:center;gap:16px;padding:0 20px;border-top:1px solid var(--line-soft);
+  background:rgba(26,17,12,.62);backdrop-filter:blur(10px);
+  font-size:11.5px;color:var(--cream-3);letter-spacing:.05em;overflow:hidden;white-space:nowrap;
+}
+.foot .sep{width:1px;height:15px;background:var(--line);flex:none}
+.foot #fNote{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.foot .grow{margin-left:auto;font-family:var(--latin);letter-spacing:.12em;flex:none}
+.foot b{color:var(--cream-2);font-family:var(--latin);font-size:13px}
+.foot a{color:var(--kin-2);text-decoration:underline;text-underline-offset:3px}
+.foot a:hover{color:var(--kin)}
+
+/* ---------- 响应式 ---------- */
+@media (max-width:1180px){
+  :root{--panel:340px}
+  .brand-sub{display:none}
+  .legend{display:none}
+  .dock-progress{width:min(600px,calc(100% - 260px))}
+}
+@media (max-width:860px){
+  :root{--bar:auto;--foot:auto}
+  .app{grid-template-rows:auto 1fr auto}
+  .bar{flex-wrap:wrap;padding:10px 12px;gap:10px}
+  .brand-sub,.status{display:none}
+  /* 顶栏改三行：品牌 / 搜索 / 等级 tab + 缩放 */
+  .brand{order:1;margin-right:auto}
+  .search{flex:1 1 100%;max-width:none;order:3}
+  .tabs{order:4;overflow-x:auto;max-width:100%;flex:1 1 auto}
+  .bar-right{order:5;margin-left:0;flex:none}
+  .dock-domain{left:10px;right:10px;top:10px;width:auto;padding-bottom:8px}
+  .dock-domain .dock-head{padding:9px 12px 6px}
+  /* 窄屏：领域筛选收成一条可横滑的窄带，把纵向空间还给图谱 */
+  .chips{flex-direction:row;flex-wrap:nowrap;overflow-x:auto;max-width:none;padding:0 10px 2px;scrollbar-width:none}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{padding:5px 10px;font-size:12px;white-space:nowrap}
+  .chip[aria-pressed="false"] .n{display:none}
+  .dock-progress{left:10px;right:10px;bottom:10px;transform:none;width:auto}
+  .prog-counts,.prog-head .main{display:none}
+  .tips{display:none}
+  .panel{top:auto;left:0;right:0;bottom:0;width:auto;height:72dvh;border-radius:10px 10px 0 0;transform:translateY(100%)}
+  .panel.on{transform:none}
+  .foot{padding:7px 12px;font-size:10.5px;flex-wrap:wrap;white-space:normal;gap:8px}
+  .foot .opt{display:none}
+}
+@media (max-width:430px){
+  .brand-txt span{display:none}
+  .back-link{display:none}
+  .bar{padding:9px 10px;gap:8px}
+  /* 手机：等级 tab 与缩放按钮并回同一行，省下一整行高度留给图谱 */
+  .tabs{padding:2px}
+  .tabs button{padding:4px 7px;font-size:12px}
+  .tabs button.all{font-size:11.5px}
+  .bar-right{gap:6px}
+  .icon-btn{width:30px;height:30px;font-size:13.5px}
+  #fs{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+}
+</style>
+</head>
+<body>
+
+<div class="bg" aria-hidden="true">
+  <div class="bg-seigaiha"></div>
+  <div class="bg-glow"></div>
+  <div class="bg-grain"></div>
+</div>
+
+<div class="app">
+
+  <!-- ================= 顶栏 ================= -->
+  <header class="bar">
+    <a class="brand" href="index.html" aria-label="本质日语 Takurou 封面">
+      <span class="hanko" aria-hidden="true">本</span>
+      <span class="brand-txt"><b>本质日语</b><span>Takurou</span></span>
+    </a>
+
+    <div class="search">
+      <span class="search-ico" aria-hidden="true"></span>
+      <input id="q" type="search" placeholder="搜索一个知识点：て形 / 受身 / 敬語…" autocomplete="off"
+             role="combobox" aria-expanded="false" aria-controls="results" aria-label="搜索知识点">
+      <kbd>回车</kbd>
+      <ul class="results" id="results" role="listbox" aria-label="搜索结果"></ul>
+    </div>
+
+    <div class="tabs" role="group" aria-label="按 JLPT 等级筛选">
+      <button class="all" type="button" data-lv="all" aria-pressed="true">全部</button>
+      <button type="button" data-lv="0" aria-pressed="false">N5</button>
+      <button type="button" data-lv="1" aria-pressed="false">N4</button>
+      <button type="button" data-lv="2" aria-pressed="false">N3</button>
+      <button type="button" data-lv="3" aria-pressed="false">N2</button>
+      <button type="button" data-lv="4" aria-pressed="false">N1</button>
+    </div>
+
+    <div class="bar-right">
+      <a class="back-link" href="index.html"><span class="arw" aria-hidden="true">←</span>返回封面</a>
+      <span class="sep" aria-hidden="true"></span>
+      <span class="status"><i class="dot" aria-hidden="true"></i><span id="status">正在加载图谱…</span></span>
+      <button class="icon-btn" id="zoomOut" type="button" aria-label="缩小">−</button>
+      <button class="icon-btn" id="zoomIn" type="button" aria-label="放大">＋</button>
+      <button class="icon-btn" id="reset" type="button" aria-label="复位视图" title="复位视图">⟲</button>
+      <button class="icon-btn" id="fs" type="button" aria-label="全屏" title="全屏">⛶</button>
+    </div>
+  </header>
+
+  <!-- ================= 图谱场 ================= -->
+  <main class="field" id="field">
+    <svg id="kg" viewBox="0 0 1320 660" role="application" tabindex="0"
+         aria-label="日语知识图谱。130 个知识点按 N5 到 N1 分为五层、排列成富士山轮廓。方向键移动焦点，回车查看详情。">
+      <defs>
+        <linearGradient id="mtnFill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"   stop-color="#D9B25F" stop-opacity=".085"/>
+          <stop offset="46%"  stop-color="#D9B25F" stop-opacity=".028"/>
+          <stop offset="100%" stop-color="#D9B25F" stop-opacity="0"/>
+        </linearGradient>
+        <radialGradient id="glowHub" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#D9B25F" stop-opacity=".34"/>
+          <stop offset="100%" stop-color="#D9B25F" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="soft" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="3.4"/>
+        </filter>
+      </defs>
+      <g class="world" id="world">
+        <path class="mtn-body" id="mtnBody" d=""></path>
+        <path class="mtn-cap" id="mtnCap" d=""></path>
+        <line class="mtn-base" id="mtnBase" x1="0" y1="0" x2="0" y2="0"></line>
+        <g id="gLevel"></g>
+        <g id="gSeq"></g>
+        <g id="gEdge"></g>
+        <g id="gNode"></g>
+      </g>
+    </svg>
+
+    <!-- 领域筛选 -->
+    <section class="dock dock-domain" aria-label="按知识领域筛选">
+      <div class="dock-head">
+        <span class="dock-kicker">Domain</span>
+        <strong>知识领域</strong>
+        <button class="link" id="allDomains" type="button">全部</button>
+      </div>
+      <div class="chips" id="chips" role="group" aria-label="知识领域"></div>
+      <div class="tips">
+        <p><b>悬停</b>点亮先修链</p>
+        <p><b>点击</b>展开教研卡片</p>
+        <p><b>滚轮 / 拖拽</b>缩放与平移</p>
+        <p><b>方向键 · 回车</b>键盘浏览</p>
+      </div>
+    </section>
+
+    <!-- 图例 -->
+    <div class="legend" aria-label="关系线图例">
+      <span><i class="lg-hard"></i>必要先修</span>
+      <span><i class="lg-soft"></i>建议先修</span>
+      <span><i class="lg-seq"></i>教材顺序</span>
+    </div>
+
+    <!-- 学习进度 -->
+    <section class="dock dock-progress" aria-label="按教材顺序筛选学习进度">
+      <div class="prog-head">
+        <span class="dock-kicker">Progress</span>
+        <span class="who" id="pLesson">—</span>
+        <span class="main" id="pMain">—</span>
+        <span class="prog-counts">已点亮 <b id="pOn">—</b> · 未触及 <b id="pOff">—</b></span>
+        <button class="play" id="play" type="button" aria-pressed="false"><span aria-hidden="true">▶</span>自动生长</button>
+      </div>
+      <div class="rail">
+        <div class="rail-track" aria-hidden="true"></div>
+        <div class="rail-fill" id="railFill" aria-hidden="true"></div>
+        <div class="rail-knob" id="railKnob" aria-hidden="true"></div>
+        <input id="rail" type="range" min="0" max="87" step="1" value="87" aria-label="按教材课次选择学习进度">
+      </div>
+      <div class="ticks" id="ticks" aria-hidden="true"></div>
+    </section>
+
+    <p class="hint sr-only" id="hint">悬停点亮先修链，点击展开教研卡片，滚轮缩放，拖拽平移，方向键移动焦点，回车查看详情</p>
+    <div class="tip" id="tip" role="status" aria-live="polite"></div>
+    <div class="gate" id="gate" role="alert"><p></p></div>
+  </main>
+
+  <!-- ================= 详情面板 ================= -->
+  <aside class="panel" id="panel" aria-label="知识点详情" aria-hidden="true">
+    <div class="panel-bar">
+      <span>Knowledge Node</span>
+      <button class="close" id="closePanel" type="button" aria-label="关闭详情">×</button>
+    </div>
+    <div class="panel-scroll" id="panelScroll">
+      <div id="pEmpty" class="p-empty">
+        <span class="ring" aria-hidden="true"></span>
+        <b>选择一个知识点</b>
+        <p>查看它从哪里来、又通向哪里，以及它挂在教材的哪一课。</p>
+      </div>
+      <div id="pBody" hidden></div>
+    </div>
+  </aside>
+
+  <!-- ================= 页脚 ================= -->
+  <footer class="foot">
+    <span id="fTextbook">教材底本 —</span>
+    <span class="sep" aria-hidden="true"></span>
+    <span class="opt">知识点 <b id="fNode">—</b> · 先修关系 <b id="fEdge">—</b> · 教材顺序 <b id="fSeq">—</b> · 课时 <b id="fLesson">—</b> · 孤立点 <b id="fIso">—</b></span>
+    <span class="sep opt" aria-hidden="true"></span>
+    <span class="opt" id="fNote">—</span>
+    <span class="grow">DIRECTED KNOWLEDGE GRAPH · v<span id="fVer">—</span></span>
+  </footer>
+
+</div>
+
+<script src="data/takurou-taxonomy.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var K = window.TAKUROU_KG;
+  if (!K) { showGate("图谱数据未能加载。请确认 data/takurou-taxonomy.js 与本页面在同一目录层级下。"); return; }
+  if (K.stats.nodeCount === 0) { showGate("图谱数据为空。"); return; }
+
+  var NS = "http://www.w3.org/2000/svg";
+  var svg = document.getElementById("kg");
+  var world = document.getElementById("world");
+  var gLevel = document.getElementById("gLevel");
+  var gSeq = document.getElementById("gSeq");
+  var gEdge = document.getElementById("gEdge");
+  var gNode = document.getElementById("gNode");
+
+  /* =========================================================
+     1. 布局：五层山形，层内按教材顺序排布后做等距松弛
+     ========================================================= */
+  var VB_W = 1320, VB_H = 660, CX = 720;
+  /* 纵向留出底部给「学习进度」条，山体整体上移，保证山脚与层标都不被遮挡。
+     横向把山体中心右移一点：左侧那列「知识领域」浮层压在图上会挡住山脚的节点。 */
+  /* half = 该层可用的横向半宽；jitter = 层内纵向抖动幅度（让每层不再是一条直线） */
+  var LAY = [
+    { y: 520, half: 440, jitter: 19 },
+    { y: 425, half: 380, jitter: 16 },
+    { y: 330, half: 296, jitter: 12 },
+    { y: 235, half: 212, jitter: 9 },
+    { y: 140, half: 140, jitter: 6 }
+  ];
+  var SUMMIT_Y = 70;
+
+  var nodes = K.nodes, lessons = K.lessons;
+  var LEV_GROUPS = LAY.map(function () { return []; });
+  nodes.forEach(function (n) { LEV_GROUPS[n.l].push(n); });
+
+  /* 半径：等级越小越大（山脚粗、山顶细），再按连接数拉开档次 —— 主次一眼可辨 */
+  function baseR(l) { return 6.6 - l * 0.52; }
+  function rank01(rel) { return Math.pow(Math.min(1, rel / 14), 0.75); }
+  nodes.forEach(function (n) {
+    n.r = +(baseR(n.l) * (0.64 + 1.2 * rank01(n.rel))).toFixed(2);
+    n.ly = LAY[n.l].y;
+  });
+
+  /* 稳定伪随机：同一个 id 永远抖动到同一处（布局可复现，刷新不会乱跳） */
+  function hash01(s) {
+    var h = 2166136261, i;
+    for (i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = (h * 16777619) >>> 0; }
+    return (h >>> 8) / 16777216;
+  }
+
+  /* 层内 x：以教材顺序为主序。先按「这一层实际需要多宽」居中铺开（山顶自然收窄），
+     再等距松弛防重叠 —— 于是 N5 铺满山脚、N1 收缩在峰顶。 */
+  var DOM_ORDER = { on: 0, goi: 1, bun: 2, keigo: 3, hyou: 4 };
+  LEV_GROUPS.forEach(function (arr, L) {
+    var half = LAY[L].half, i;
+    arr.sort(function (a, b) {
+      if (a.seq !== b.seq) return a.seq - b.seq;
+      if (DOM_ORDER[a.k] !== DOM_ORDER[b.k]) return DOM_ORDER[a.k] - DOM_ORDER[b.k];
+      return a.i - b.i;
+    });
+    var need = 0;
+    for (i = 0; i < arr.length - 1; i++) need += arr[i].r + arr[i + 1].r + 3.2;
+    var span = Math.min(2 * half, need * 1.7);   /* 人少的层收紧，别拉成一串孤点 */
+    arr.forEach(function (d, k) {
+      d.lx = arr.length === 1 ? CX : CX + (k / (arr.length - 1) - 0.5) * span;
+    });
+    relax(arr, half);
+  });
+
+  /* 纵向抖动：同一层的点不再排成一条直线，山体才有"山"的质感。
+     越靠层边缘抖得越少，免得探出山体轮廓。 */
+  LEV_GROUPS.forEach(function (arr, L) {
+    var half = LAY[L].half, amp = LAY[L].jitter;
+    arr.forEach(function (d) {
+      var edge = Math.abs(d.lx - CX) / half;
+      d.ly = LAY[L].y + (hash01(d.id) * 2 - 1) * amp * (1 - 0.6 * edge);
+    });
+  });
+
+  /* 一维等距松弛：保证相邻节点不重叠，再整体缩放进层宽 */
+  function relax(arr, half) {
+    var i, j, pass, a, b, need, gap, push;
+    for (pass = 0; pass < 60; pass++) {
+      for (i = 0; i < arr.length - 1; i++) {
+        a = arr[i]; b = arr[i + 1];
+        need = a.r + b.r + 3.2;
+        gap = b.lx - a.lx;
+        if (gap < need) {
+          push = (need - gap) / 2;
+          a.lx -= push; b.lx += push;
+        }
+      }
+      for (j = 0; j < arr.length; j++) {
+        arr[j].lx = Math.max(CX - half, Math.min(CX + half, arr[j].lx));
+      }
+    }
+    /* 若被边界挤压后仍有重叠，整体等比收进层宽 */
+    var ext = Math.max.apply(null, arr.map(function (d) { return Math.abs(d.lx - CX); }));
+    if (ext > half) {
+      var k = half / ext;
+      arr.forEach(function (d) { d.lx = CX + (d.lx - CX) * k; });
+    }
+  }
+
+  /* 每层的真实横向占用：山体轮廓照着它画，山就"贴着"知识点。
+     数据本身就是 47/40/19/16/8 逐层收窄的，所以轮廓天然是一座山，不需要额外拼形状。 */
+  var EXT = LEV_GROUPS.map(function (arr) {
+    var m = 0;
+    arr.forEach(function (d) { m = Math.max(m, Math.abs(d.lx - CX) + d.r); });
+    return m + 30;
+  });
+
+  var byId = K.nodeById;
+  function xy(id) { var n = byId[id]; return { x: n.lx, y: n.ly }; }
+
+  /* =========================================================
+     2. 静默元素：山之轮廓 · 雪冠 · 山脚线 · 层基线 · 层标
+     ========================================================= */
+  function el(tag, attrs) {
+    var e = document.createElementNS(NS, tag);
+    for (var k in attrs) if (attrs[k] !== undefined) e.setAttribute(k, attrs[k]);
+    return e;
+  }
+
+  (function drawMountain() {
+    var left = [], right = [], i;
+    for (i = 0; i < LAY.length; i++) {
+      left.push({ x: CX - EXT[i], y: LAY[i].y });
+      right.push({ x: CX + EXT[i], y: LAY[i].y });
+    }
+    var d = "M" + left.map(function (p) { return p.x.toFixed(1) + " " + p.y; }).join(" L");
+    d += " L" + CX + " " + SUMMIT_Y;
+    d += " L" + right.slice().reverse().map(function (p) { return p.x.toFixed(1) + " " + p.y; }).join(" L");
+    d += " Q" + CX + " " + (LAY[0].y + 26) + " " + left[0].x.toFixed(1) + " " + LAY[0].y + " Z";
+    document.getElementById("mtnBody").setAttribute("d", d);
+
+    /* 雪冠：山顶那一小块，让"富士山"这三个字落地 */
+    var capY = SUMMIT_Y + 58, capW = Math.max(EXT[4] * 0.62, 34);
+    document.getElementById("mtnCap").setAttribute("d",
+      "M" + CX + " " + SUMMIT_Y +
+      " L" + (CX + capW).toFixed(1) + " " + capY +
+      " Q" + CX + " " + (capY - 15) + " " + (CX - capW).toFixed(1) + " " + capY + " Z");
+
+    var base = document.getElementById("mtnBase");
+    base.setAttribute("x1", (left[0].x - 18).toFixed(1));
+    base.setAttribute("y1", LAY[0].y + 13);
+    base.setAttribute("x2", (right[0].x + 18).toFixed(1));
+    base.setAttribute("y2", LAY[0].y + 13);
+  })();
+
+  LAY.forEach(function (L, i) {
+    var lv = K.levels[i];
+    var g = el("g", {});
+    g.appendChild(el("line", {
+      class: "level-line", x1: CX - EXT[i] - 12, y1: L.y, x2: CX + EXT[i] + 12, y2: L.y
+    }));
+    var tx = Math.max(72, CX - EXT[i] - 14);
+    g.appendChild(el("line", {
+      class: "level-bar", x1: tx, y1: L.y - 5, x2: tx, y2: L.y + 5
+    }));
+    /* 层标统一置于基线上方，避让层内节点 */
+    var t = el("text", { class: "level-tag", x: tx - 6, y: L.y - 34 });
+    t.textContent = lv.label;
+    g.appendChild(t);
+    var sub = el("text", { class: "level-note", x: tx - 6, y: L.y - 19 });
+    sub.textContent = lv.book + " · " + K.levelStat[i].count + " 点";
+    g.appendChild(sub);
+    gLevel.appendChild(g);
+  });
+
+  /* =========================================================
+     3. 连线
+     ========================================================= */
+  var EDGE_LIMIT = 320;  /* 超过此数量改用直线，避免视觉噪音 */
+  var STRAIGHT = K.edges.length > EDGE_LIMIT;
+  function edgePath(e) {
+    var a = byId[e.from], b = byId[e.to];
+    var A = { x: a.lx, y: a.ly }, B = { x: b.lx, y: b.ly };
+    if (STRAIGHT) {
+      return "M" + A.x.toFixed(1) + " " + A.y.toFixed(1) + " L" + B.x.toFixed(1) + " " + B.y.toFixed(1);
+    }
+    var dx = B.x - A.x, dy = B.y - A.y;
+    var span = Math.abs(a.l - b.l);
+    var bow = span <= 1 ? 0.12 : 0.2 + span * 0.04;
+    var mx = (A.x + B.x) / 2 - dy * bow * 0.22;
+    var my = (A.y + B.y) / 2 + dx * bow * 0.22;
+    return "M" + A.x.toFixed(1) + " " + A.y.toFixed(1) +
+           " Q" + mx.toFixed(1) + " " + my.toFixed(1) + " " + B.x.toFixed(1) + " " + B.y.toFixed(1);
+  }
+
+  var seqEls = K.seqEdges.map(function (e) {
+    var p = el("path", { class: "edge edge-seq", d: edgePath(e) });
+    gSeq.appendChild(p);
+    return { el: p, a: e.from, b: e.to, kind: "seq" };
+  });
+
+  var edgeEls = K.edges.map(function (e) {
+    if (e.from === e.to) return null;
+    var p = el("path", { class: "edge edge-" + e.kind, d: edgePath(e) });
+    gEdge.appendChild(p);
+    return { el: p, a: e.from, b: e.to, kind: e.kind };
+  }).filter(Boolean);
+
+  /* =========================================================
+     4. 节点
+     ========================================================= */
+  var HUB_REL_MIN = 7;
+  nodes.forEach(function (d) {
+    d.levelsLabel = K.levels[d.l].label + " " + K.levels[d.l].jp;
+    d.lessonLabel = d.lesson ? d.lesson.book + "第" + d.lesson.no + "課" : "无课次";
+  });
+  var nodeEls = nodes.map(function (d) {
+    var dom = K.domainById[d.k];
+    var g = el("g", {
+      class: "nm" + (d.rel >= HUB_REL_MIN ? " has-label" : ""),
+      "data-id": d.id, "data-i": d.i,
+      transform: "translate(" + d.lx.toFixed(1) + "," + d.ly + ")",
+      role: "button",
+      "aria-label": d.jp + "，" + d.cn + "，" + d.levelsLabel + "，" + d.lessonLabel +
+        "，与图上另外 " + d.rel + " 个知识点相连"
+    });
+    var halo = el("circle", { class: "halo", cx: 0, cy: 0, r: d.r + 6.5, stroke: dom.color, style: "stroke-opacity:.65" });
+    var pulse = el("circle", { class: "pulse", cx: 0, cy: 0, r: d.r + 3, stroke: dom.color });
+    var dot = el("circle", {
+      class: "nd", cx: 0, cy: 0, r: d.r,
+      fill: dom.color, "fill-opacity": d.rel >= HUB_REL_MIN ? .92 : .72,
+      stroke: "#1A110C", "stroke-width": 1.4
+    });
+    var label = el("text", { class: "nl", x: 0, y: -d.r - 7 });
+    label.textContent = d.jp.length > 9 ? d.jp.slice(0, 8) + "…" : d.jp;
+    g.appendChild(halo); g.appendChild(pulse); g.appendChild(dot); g.appendChild(label);
+    gNode.appendChild(g);
+    return { el: g, dot: dot, halo: halo, pulse: pulse, d: d, color: dom.color, baseR: d.r };
+  });
+  /* =========================================================
+     5. 视口（缩放 / 平移）
+     ========================================================= */
+  var view = { k: 1, x: 0, y: 0 };
+  var K_MIN = 0.62, K_MAX = 3.4, VIEW_PAD = 0.975;
+
+  /* SVG 用 preserveAspectRatio="meet" 自己适配视口，因此 view.x/y 的单位是 viewBox 坐标。
+     这里把 CSS 像素换算回 viewBox 坐标，避免「像素 + viewBox」两套单位混算。 */
+  function metrics() {
+    var r = svg.getBoundingClientRect();
+    var s = Math.min(r.width / VB_W, r.height / VB_H) || 1;
+    return { s: s, ox: (r.width - VB_W * s) / 2, oy: (r.height - VB_H * s) / 2, w: r.width, h: r.height };
+  }
+  function toScreen(lx, ly) {
+    var m = metrics();
+    return { x: m.ox + (view.x + lx * view.k) * m.s, y: m.oy + (view.y + ly * view.k) * m.s };
+  }
+  function applyView() {
+    world.setAttribute("transform",
+      "translate(" + view.x.toFixed(2) + "," + view.y.toFixed(2) + ") scale(" + view.k.toFixed(4) + ")");
+    /* 放大后给所有节点显示标签；窄屏上起点更高，否则一屏全是字 */
+    var showAll = view.k >= (window.innerWidth < 900 ? 2.4 : 1.45);
+    nodeEls.forEach(function (o) {
+      if (o.d.rel >= HUB_REL_MIN) return;
+      o.el.classList.toggle("has-label", showAll);
+    });
+  }
+  function resetView() {
+    /* 窄屏上"整座山"只有几百像素宽，节点会小到看不清；宁可放大一点让用户自己拖 */
+    view.k = window.innerWidth < 900 ? 1.7 : VIEW_PAD;
+    view.x = (VB_W - VB_W * view.k) / 2;
+    view.y = (VB_H - VB_H * view.k) / 2;
+    applyView();
+  }
+  function zoomAt(px, py, factor) {
+    var m = metrics();
+    var nk = Math.max(K_MIN, Math.min(K_MAX, view.k * factor));
+    if (nk === view.k) return;
+    var bx = (px - m.ox) / m.s, by = (py - m.oy) / m.s;
+    view.x = bx - (bx - view.x) * (nk / view.k);
+    view.y = by - (by - view.y) * (nk / view.k);
+    view.k = nk;
+    applyView();
+  }
+  function centerOn(node, k, avoidPanel) {
+    var m = metrics();
+    view.k = Math.max(K_MIN, Math.min(K_MAX, k || Math.max(1.25, view.k)));
+    /* 详情面板展开时，把目标节点居中到面板左侧的可视区，避免被遮挡 */
+    var reserved = (avoidPanel && window.innerWidth > 860) ? 404 / m.s : 0;
+    var cx = (VB_W - reserved) / 2;
+    view.x = cx - node.lx * view.k;
+    view.y = VB_H / 2 - node.ly * view.k;
+    applyView();
+  }
+
+  svg.addEventListener("wheel", function (e) {
+    e.preventDefault();
+    var r = svg.getBoundingClientRect();
+    zoomAt(e.clientX - r.left, e.clientY - r.top, e.deltaY < 0 ? 1.12 : 1 / 1.12);
+  }, { passive: false });
+
+  var panning = false, lastX = 0, lastY = 0, moved = 0;
+  svg.addEventListener("pointerdown", function (e) {
+    if (e.target.closest(".nm")) return;
+    panning = true; moved = 0; lastX = e.clientX; lastY = e.clientY;
+    svg.classList.add("panning"); svg.setPointerCapture(e.pointerId);
+  });
+  svg.addEventListener("pointermove", function (e) {
+    if (!panning) return;
+    var dx = e.clientX - lastX, dy = e.clientY - lastY;
+    moved += Math.abs(dx) + Math.abs(dy);
+    var s = metrics().s;
+    view.x += dx / s; view.y += dy / s;
+    lastX = e.clientX; lastY = e.clientY;
+    applyView();
+  });
+  ["pointerup", "pointercancel"].forEach(function (t) {
+    svg.addEventListener(t, function (e) {
+      if (!panning) return;
+      panning = false; svg.classList.remove("panning");
+      try { svg.releasePointerCapture(e.pointerId); } catch (_) {}
+    });
+  });
+
+  document.getElementById("zoomIn").addEventListener("click", function () {
+    var m = metrics(); zoomAt(m.w / 2, m.h / 2, 1.22);
+  });
+  document.getElementById("zoomOut").addEventListener("click", function () {
+    var m = metrics(); zoomAt(m.w / 2, m.h / 2, 1 / 1.22);
+  });
+  document.getElementById("reset").addEventListener("click", function () { resetView(); });
+  document.getElementById("fs").addEventListener("click", function () {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else document.documentElement.requestFullscreen().catch(function () {});
+  });
+
+  /* =========================================================
+     6. 状态与筛选
+     ========================================================= */
+  var MAX_SEQ = lessons.length - 1;
+  var state = { domain: "all", level: null, progress: MAX_SEQ, hover: null, sel: null, focus: null };
+
+  function inScope(n) {
+    if (state.domain !== "all" && n.k !== state.domain) return false;
+    if (state.level !== null && n.l !== state.level) return false;
+    return true;
+  }
+  function reached(n) { return n.seq <= state.progress; }
+
+  function neighborSet(id) {
+    var n = byId[id];
+    var set = Object.create(null);
+    set[id] = 1;
+    n.pre.forEach(function (p) { set[p] = 1; });
+    n.unlock.forEach(function (u) { set[u] = 1; });
+    /* 二跳：给先修链上下文，但用更弱的强调 */
+    n.pre.forEach(function (p) {
+      byId[p].pre.forEach(function (q) { if (!set[q]) set[q] = 2; });
+    });
+    n.unlock.forEach(function (u) {
+      byId[u].unlock.forEach(function (q) { if (!set[q]) set[q] = 2; });
+    });
+    return set;
+  }
+
+  function render() {
+    var active = state.hover || state.sel;
+    var near = active ? neighborSet(active) : null;
+
+    nodeEls.forEach(function (o) {
+      var d = o.d;
+      o.el.classList.remove("is-dim", "is-on", "is-focus");
+      if (state.focus === d.id) o.el.classList.add("is-focus");
+
+      var scope = inScope(d), hit = reached(d);
+      if (!scope || !hit) { o.el.classList.add("is-dim"); }
+      else if (near) {
+        if (near[d.id] === 1) o.el.classList.add("is-on");
+        else if (!near[d.id]) o.el.classList.add("is-dim");
+      }
+
+      /* 半径：选中放大；枢纽在范围内稍大 */
+      var target = o.baseR;
+      if (state.sel === d.id || state.hover === d.id) target = o.baseR + 3.4;
+      else if (near && near[d.id] === 1) target = o.baseR + 1.5;
+      o.dot.setAttribute("r", target.toFixed(2));
+      o.halo.setAttribute("r", (target + 6.5).toFixed(2));
+      o.pulse.setAttribute("r", (target + 3).toFixed(2));
+    });
+
+    [seqEls, edgeEls].forEach(function (list) {
+      list.forEach(function (o) {
+        o.el.classList.remove("is-lit", "is-dim");
+        if (!near) return;
+        var on = near[o.a] === 1 && near[o.b] === 1 && (o.a === active || o.b === active);
+        if (on) {
+          o.el.classList.add("is-lit");
+          if (o.kind === "soft" || o.kind === "seq") o.el.classList.add("soft");
+        } else {
+          o.el.classList.add("is-dim");
+        }
+      });
+    });
+
+    updateStatus(active);
+    updatePanel(active);
+    syncProgress();
+  }
+
+  function updateStatus(active) {
+    var s = document.getElementById("status");
+    if (!active) {
+      s.textContent = "全域 " + K.stats.nodeCount + " 点 · " + K.stats.edgeCount + " 条先修关系";
+      return;
+    }
+    var d = byId[active];
+    s.textContent = d.jp + " · 先修 " + d.pre.length + " · 解锁 " + d.unlock.length +
+      (d.lesson ? " · " + d.lesson.book + "第" + d.lesson.no + "課" : "");
+  }
+
+  /* =========================================================
+     7. 详情面板
+     ========================================================= */
+  var panel = document.getElementById("panel");
+  var pBody = document.getElementById("pBody");
+  var pEmpty = document.getElementById("pEmpty");
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function updatePanel(active) {
+    if (!active) {
+      panel.classList.remove("on");
+      panel.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("panel-open");
+      pBody.hidden = true; pEmpty.hidden = false;
+      return;
+    }
+    var d = byId[active];
+    var dom = K.domainById[d.k];
+    var lv = K.levels[d.l];
+    var sibs = nodes.filter(function (n) { return n.lessonId === d.lessonId && n.id !== d.id; });
+
+    var html = "";
+    html += '<div class="p-head">';
+    html += '<div class="p-kind"><i class="sw" style="background:' + dom.color + '"></i>' +
+            esc(dom.label) + ' · ' + esc(dom.zh) + ' <span class="lv">' + lv.label + ' ' + esc(lv.jp) + '</span></div>';
+    html += '<h2 class="p-jp">' + esc(d.jp) + '</h2>';
+    html += '<p class="p-cn">' + esc(d.cn) + '</p>';
+    html += '<p class="p-desc">' + esc(d.des) + '</p>';
+    html += '</div>';
+
+    /* 01 所属课时 */
+    html += '<section class="p-sec"><h3><em>01</em>所属课时<span class="cnt">' +
+            (sibs.length ? sibs.length + 1 + " 点" : "1 点") + '</span></h3>';
+    if (d.lesson) {
+      html += '<div class="lesson-card">';
+      html += '<span class="lesson-no">' + esc(d.lesson.book) + ' · 第 ' + d.lesson.no + ' 課</span>';
+      html += '<b>' + esc(d.lesson.main) + '</b>';
+      html += '<p>教材顺序 #' + (d.lesson.seq + 1) + ' / ' + lessons.length + ' · ' +
+              esc(lv.label) + ' 层 · ' + esc(lv.book) + '</p>';
+      if (sibs.length) {
+        html += '<div class="siblings">';
+        sibs.forEach(function (s2) {
+          html += '<button class="sib" type="button" data-go="' + s2.id + '">' + esc(s2.jp) + '</button>';
+        });
+        html += '</div>';
+      }
+      html += '</div>';
+    } else {
+      html += '<p class="rel-none">该知识点不挂在具体课次上。</p>';
+    }
+    html += '</section>';
+
+    /* 02 直接先修 */
+    html += '<section class="p-sec"><h3><em>02</em>直接先修<span class="cnt">' + d.pre.length + '</span></h3>';
+    html += relList(d.pre, active, "pre");
+    html += '</section>';
+
+    /* 03 可解锁 */
+    html += '<section class="p-sec"><h3><em>03</em>可解锁<span class="cnt">' + d.unlock.length + '</span></h3>';
+    html += relList(d.unlock, active, "unlock");
+    html += '</section>';
+
+    /* 04 掌握证据 */
+    html += '<section class="p-sec"><h3><em>04</em>掌握证据</h3>';
+    html += '<ul class="evi"><li>' + esc(d.ev) + '</li>';
+    html += '<li>能在真实语境中主动产出「' + esc(d.jp) + '」，并识别其典型误用。</li></ul>';
+    if (d.ex && d.ex.length) {
+      html += '<div class="ex">';
+      d.ex.forEach(function (p) {
+        html += '<p>' + esc(p[0]) + '<cn>' + esc(p[1]) + '</cn></p>';
+      });
+      html += '</div>';
+    }
+    if (d.pit) html += '<div class="pit"><b>易错</b><span>' + esc(d.pit) + '</span></div>';
+    html += '</section>';
+
+    html += '<div class="p-acts">' +
+            '<button class="btn btn-line" type="button" data-go="' + d.id + '">在图上定位</button>' +
+            '<button class="btn btn-ghost" type="button" data-copy="' + esc(d.jp) + '">复制日文</button>' +
+            '</div>';
+
+    pBody.innerHTML = html;
+    pBody.hidden = false; pEmpty.hidden = true;
+    panel.classList.add("on");
+    panel.setAttribute("aria-hidden", "false");
+    document.body.classList.add("panel-open");
+    document.getElementById("panelScroll").scrollTop = 0;
+  }
+
+  function relList(ids, active, dir) {
+    if (!ids.length) return '<p class="rel-none">' + (dir === "pre" ? "这是图谱的起点，没有先修。" : "这是图谱的终点，暂无解锁。") + '</p>';
+    var out = '<div class="rel">';
+    ids.forEach(function (id) {
+      var n = byId[id];
+      var kindTag = "";
+      K.edges.forEach(function (e) {
+        if (e.from === active && e.to === id) kindTag = e.kind === "hard" ? "必要" : "建议";
+        else if (e.to === active && e.from === id) kindTag = e.kind === "hard" ? "必要" : "建议";
+      });
+      var lv = K.levels[n.l];
+      out += '<button type="button" data-go="' + id + '">' +
+             '<span class="rj">' + esc(n.jp) + '</span>' +
+             '<span class="rc">' + esc(n.cn) + '</span>' +
+             '<span class="rt' + (kindTag === "必要" ? " hard" : "") + '">' +
+             (kindTag ? kindTag + " · " : "") + lv.label + '</span></button>';
+    });
+    return out + '</div>';
+  }
+
+  pBody.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-go]");
+    if (b) { select(b.getAttribute("data-go"), true); return; }
+    var c = e.target.closest("[data-copy]");
+    if (c) {
+      var txt = c.getAttribute("data-copy");
+      if (navigator.clipboard) navigator.clipboard.writeText(txt).then(function () {
+        c.textContent = "已复制"; setTimeout(function () { c.textContent = "复制日文"; }, 1400);
+      });
+    }
+  });
+  document.getElementById("closePanel").addEventListener("click", function () { select(null); });
+
+  /* =========================================================
+     8. 选中 / 悬停 / 焦点
+     ========================================================= */
+  function select(id, center) {
+    state.sel = id;
+    state.hover = null;
+    hideTip();
+    if (id && center) centerOn(byId[id], null, true);
+    if (id) { state.focus = id; }
+    render();
+  }
+
+  gNode.addEventListener("pointerover", function (e) {
+    var g = e.target.closest(".nm"); if (!g) return;
+    var id = g.getAttribute("data-id");
+    if (state.hover === id) return;
+    state.hover = id; showTip(byId[id]); render();
+  });
+  gNode.addEventListener("pointerout", function (e) {
+    var g = e.target.closest(".nm"); if (!g) return;
+    if (panning && moved > 4) return;
+    state.hover = null; hideTip(); render();
+  });
+  gNode.addEventListener("click", function (e) {
+    var g = e.target.closest(".nm"); if (!g) return;
+    if (moved > 5) return;
+    var id = g.getAttribute("data-id");
+    select(state.sel === id ? null : id, false);
+  });
+
+  var tip = document.getElementById("tip");
+  function showTip(d) {
+    var m = metrics();
+    var p = toScreen(d.lx, d.ly);
+    tip.innerHTML = "<b>" + esc(d.jp) + "</b><i>" + esc(d.cn) + " · " + K.levels[d.l].label +
+      (d.lesson ? " · " + d.lesson.book + "第" + d.lesson.no + "課" : "") + " · 关系 " + d.rel + "</i>";
+    tip.style.left = Math.max(80, Math.min(m.w - 80, p.x)) + "px";
+    tip.style.top = Math.max(44, p.y - 14) + "px";
+    tip.classList.add("on");
+  }
+  function hideTip() { tip.classList.remove("on"); }
+
+  /* 键盘：方向键在图上移动焦点，回车查看，Esc 关闭 */
+  svg.addEventListener("keydown", function (e) {
+    var keys = { ArrowRight: [1, 0], ArrowLeft: [-1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] };
+    if (e.key === "Escape") { select(null); return; }
+    if (e.key === "Enter" || e.key === " ") {
+      if (state.focus) { e.preventDefault(); select(state.focus, true); }
+      return;
+    }
+    if (!keys[e.key]) return;
+    e.preventDefault();
+    var dir = keys[e.key];
+    var cur = state.focus ? byId[state.focus] : null;
+    if (!cur) {
+      var first = nodes.filter(inScope)[0] || nodes[0];
+      state.focus = first.id; render(); return;
+    }
+    var best = null, bestScore = Infinity;
+    nodes.forEach(function (n) {
+      if (n.id === cur.id || !inScope(n)) return;
+      var dx = n.lx - cur.lx, dy = n.ly - cur.ly;
+      var fwd = dx * dir[0] + dy * dir[1];
+      if (fwd <= 2) return;
+      var side = Math.abs(dx * dir[1] - dy * dir[0]);
+      var score = fwd + side * 2.1;
+      if (score < bestScore) { bestScore = score; best = n; }
+    });
+    if (best) { state.focus = best.id; showTip(best); render(); }
+  });
+  svg.addEventListener("blur", function () { hideTip(); });
+
+  /* =========================================================
+     9. 领域 chips · 等级 tabs · 进度滑杆
+     ========================================================= */
+  var chips = document.getElementById("chips");
+  function buildChips() {
+    var html = '<button class="chip" type="button" data-d="all" aria-pressed="true">' +
+               '<span class="sw" style="background:linear-gradient(135deg,#7FA8D8,#E4735C,#D9B25F)"></span>' +
+               '全部领域<span class="n">' + K.stats.nodeCount + '</span></button>';
+    K.domains.forEach(function (d) {
+      html += '<button class="chip" type="button" data-d="' + d.id + '" aria-pressed="false">' +
+              '<span class="sw" style="background:' + d.color + '"></span>' +
+              d.label + '<span class="n">' + d.count + '</span></button>';
+    });
+    chips.innerHTML = html;
+  }
+  buildChips();
+
+  chips.addEventListener("click", function (e) {
+    var b = e.target.closest(".chip"); if (!b) return;
+    setDomain(b.getAttribute("data-d"));
+  });
+  document.getElementById("allDomains").addEventListener("click", function () { setDomain("all"); });
+
+  function setDomain(v) {
+    state.domain = v;
+    chips.querySelectorAll(".chip").forEach(function (c) {
+      c.setAttribute("aria-pressed", String(c.getAttribute("data-d") === v));
+    });
+    render();
+  }
+
+  document.querySelector(".tabs").addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    var v = b.getAttribute("data-lv");
+    state.level = v === "all" ? null : Number(v);
+    this.querySelectorAll("button").forEach(function (x) {
+      x.setAttribute("aria-pressed", String(x === b));
+    });
+    render();
+  });
+
+  /* 进度 */
+  var rail = document.getElementById("rail");
+  function buildTicks() {
+    var t = document.getElementById("ticks"), html = "", lastEnd = -1;
+    K.levels.forEach(function (lv, i) {
+      var group = lessons.filter(function (l) { return l.level === lv.id; });
+      if (!group.length) return;
+      var start = group[0].seq, end = group[group.length - 1].seq;
+      var mid = (start + end) / 2;
+      if (mid <= lastEnd + 2) return;
+      lastEnd = mid;
+      html += '<span style="left:' + ((mid / MAX_SEQ) * 100).toFixed(2) + '%">' +
+              lv.book + '</span>';
+    });
+    t.innerHTML = html;
+  }
+  buildTicks();
+
+  function syncProgress() {
+    var v = Number(rail.value);
+    var pct = MAX_SEQ ? (v / MAX_SEQ) * 100 : 100;
+    document.getElementById("railFill").style.width = pct + "%";
+    document.getElementById("railKnob").style.left = pct + "%";
+    var ls = lessons[v] || lessons[MAX_SEQ];
+    document.getElementById("pLesson").textContent = ls.book + " 第 " + ls.no + " 課";
+    document.getElementById("pMain").textContent = ls.main + "　（教材顺序 " + (v + 1) + "/" + lessons.length + "）";
+    var on = 0, off = 0;
+    nodes.forEach(function (n) { if (inScope(n)) { if (reached(n)) on++; else off++; } });
+    document.getElementById("pOn").textContent = on;
+    document.getElementById("pOff").textContent = off;
+  }
+  rail.addEventListener("input", function () {
+    state.progress = Number(rail.value);
+    render();
+  });
+
+  /* 自动生长 */
+  var playing = false, timer = null;
+  var playBtn = document.getElementById("play");
+  playBtn.addEventListener("click", function () {
+    if (playing) { stopPlay(); return; }
+    playing = true; playBtn.setAttribute("aria-pressed", "true");
+    playBtn.innerHTML = '<span aria-hidden="true">❚❚</span>暂停生长';
+    rail.value = 0; state.progress = 0; render();
+    timer = setInterval(function () {
+      var v = Number(rail.value) + 1;
+      if (v > MAX_SEQ) { stopPlay(); return; }
+      rail.value = v; state.progress = v; render();
+    }, 110);
+  });
+  function stopPlay() {
+    playing = false; clearInterval(timer); timer = null;
+    playBtn.setAttribute("aria-pressed", "false");
+    playBtn.innerHTML = '<span aria-hidden="true">▶</span>自动生长';
+  }
+
+  /* =========================================================
+     10. 搜索
+     ========================================================= */
+  var q = document.getElementById("q");
+  var results = document.getElementById("results");
+  var hits = [], hi = -1;
+
+  function doSearch() {
+    var v = q.value.trim().toLowerCase();
+    if (!v) { closeResults(); return; }
+    hits = nodes.filter(function (n) {
+      var inLesson = n.lesson ? (n.lesson.book + n.lesson.no + n.lesson.main) : "";
+      return (n.jp + n.cn + n.des + n.id + inLesson).toLowerCase().indexOf(v) >= 0;
+    }).sort(function (a, b) {
+      var ai = a.jp.toLowerCase().indexOf(v), bi = b.jp.toLowerCase().indexOf(v);
+      if (ai !== bi) return (ai < 0 ? 99 : ai) - (bi < 0 ? 99 : bi);
+      return b.rel - a.rel;
+    }).slice(0, 9);
+    hi = hits.length ? 0 : -1;
+    renderResults();
+    results.classList.add("on");
+    q.setAttribute("aria-expanded", "true");
+  }
+  function renderResults() {
+    if (!hits.length) {
+      results.innerHTML = '<li class="empty">没有匹配的知识点。试试「て形」「受身」「敬語」。</li>';
+      return;
+    }
+    results.innerHTML = hits.map(function (n, i) {
+      var lv = K.levels[n.l];
+      return '<li><button type="button" role="option" data-id="' + n.id + '"' +
+        (i === hi ? ' class="on" aria-selected="true"' : '') + '>' +
+        '<span class="rj">' + esc(n.jp) + '</span>' +
+        '<span class="rc">' + esc(n.cn) + '</span>' +
+        '<span class="rl">' + lv.label + (n.lesson ? " · " + n.lesson.book + " " + n.lesson.no + "課" : "") + '</span>' +
+        '</button></li>';
+    }).join("");
+  }
+  function closeResults() {
+    results.classList.remove("on"); q.setAttribute("aria-expanded", "false"); hits = []; hi = -1;
+  }
+  function pick(id) {
+    var n = byId[id];
+    /* 自动放开筛选，保证目标可见 */
+    if (state.domain !== "all" && state.domain !== n.k) setDomain("all");
+    if (state.level !== null && state.level !== n.l) {
+      state.level = null;
+      document.querySelectorAll(".tabs button").forEach(function (x) {
+        x.setAttribute("aria-pressed", String(x.getAttribute("data-lv") === "all"));
+      });
+    }
+    if (n.seq > state.progress) { rail.value = n.seq; state.progress = n.seq; }
+    select(id, true);
+    closeResults(); q.value = n.jp;
+  }
+  q.addEventListener("input", doSearch);
+  q.addEventListener("focus", function () { if (q.value.trim()) doSearch(); });
+  q.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      e.preventDefault();
+      if (!hits.length) return;
+      hi = (hi + (e.key === "ArrowDown" ? 1 : -1) + hits.length) % hits.length;
+      renderResults();
+      return;
+    }
+    if (e.key === "Enter") {
+      e.preventDefault();
+      if (hits.length) pick(hits[hi >= 0 ? hi : 0].id);
+      return;
+    }
+    if (e.key === "Escape") { closeResults(); q.blur(); }
+  });
+  results.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-id]"); if (!b) return;
+    pick(b.getAttribute("data-id"));
+  });
+  document.addEventListener("click", function (e) {
+    if (!e.target.closest(".search")) closeResults();
+  });
+
+  /* 快捷键 */
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "/" && document.activeElement !== q) { e.preventDefault(); q.focus(); }
+    if (e.key === "Escape" && document.activeElement !== q) select(null);
+  });
+
+  /* =========================================================
+     11. 页脚与启动
+     ========================================================= */
+  var s = K.stats;
+  document.getElementById("fTextbook").innerHTML =
+    "教材底本 <b>" + K.meta.textbook + "</b> · " + K.meta.books.join(" ／ ") + " · taxonomy v" + K.meta.version;
+  document.getElementById("fNode").textContent = s.nodeCount;
+  document.getElementById("fEdge").textContent = s.edgeCount;
+  document.getElementById("fSeq").textContent = s.seqCount;
+  document.getElementById("fLesson").textContent = s.lessonCount;
+  document.getElementById("fIso").textContent = s.isolated;
+  document.getElementById("fNote").textContent = K.meta.note;
+  document.getElementById("fVer").textContent = K.meta.version;
+
+  function showGate(msg) {
+    var g = document.getElementById("gate");
+    g.querySelector("p").textContent = msg;
+    g.classList.add("on");
+  }
+
+  /* 数据完整性守卫：图上画出来的数字必须与数据一致 */
+  if (s.isolated > 0) {
+    showGate("数据自检未通过：" + s.isolated + " 个孤立知识点，图谱可能不完整。");
+  }
+  if (K.dropped.length) {
+    console.warn("[Takurou KG] 已跳过无效或重复边 " + K.dropped.length + " 条");
+  }
+
+  resetView();
+  render();
+
+  /* 深链：首页的缩略图点某个知识点，会带 hash 跳到本页并直接展开 */
+  (function fromHash() {
+    var id = decodeURIComponent((location.hash || "").replace(/^#/, ""));
+    if (id && byId[id]) setTimeout(function () { select(id, true); }, 60);
+  })();
+  window.addEventListener("hashchange", function () {
+    var id = decodeURIComponent((location.hash || "").replace(/^#/, ""));
+    if (id && byId[id]) select(id, true);
+  });
+})();
+</script>
+</body>
+</html>

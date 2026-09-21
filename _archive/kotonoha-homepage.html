@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>言の葉 KOTONOHA · 用一张知识图谱学日语</title>
+<meta name="description" content="言の葉 KOTONOHA — 把散落的日语知识点连成一张可以走的地图。五十音、助词、敬语到 N1，都在同一张知识图谱上。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   言の葉 KOTONOHA — Design Tokens
+   和色体系 · 现代和风
+   ============================================================ */
+:root{
+  /* --- 和色 Primitive --- */
+  --kinari:#FAF6EC;        /* 生成り · 主背景 */
+  --kinari-2:#F2ECE0;      /* 白練 · 次背景 */
+  --shironeri:#FFFDF7;     /* 白練 · 卡片面 */
+  --sumi:#1D1A16;          /* 墨 · 主文字 */
+  --sumi-2:#3B352C;        /* 淡墨 */
+  --ai:#1F3A5C;            /* 藍 · 主色 */
+  --ai-2:#2C4E75;
+  --ai-3:#5C80A4;
+  --ai-pale:#DDE6EF;
+  --shu:#B83A2C;           /* 朱 · 强调 / CTA */
+  --shu-2:#962A1E;
+  --shu-pale:#F3DFD9;
+  --kin:#A8874A;           /* 金茶 · 衬线装饰 */
+  --kin-2:#C8AD78;
+  --kin-pale:#EFE4CB;
+  --mizu:#6E8B99;          /* 水浅葱 */
+  --matcha:#7E8F6B;        /* 若竹 */
+
+  /* --- Semantic --- */
+  --bg:var(--kinari);
+  --surface:var(--shironeri);
+  --text:var(--sumi);
+  --text-2:var(--sumi-2);
+  --text-3:#6E6558;
+  --line:color-mix(in oklab, var(--ai) 15%, transparent);
+  --line-soft:color-mix(in oklab, var(--ai) 8%, transparent);
+
+  /* --- Type --- */
+  --mincho:"Shippori Mincho B1","Hiragino Mincho ProN","Songti SC","Noto Serif JP",serif;
+  --gothic:"Zen Kaku Gothic New",-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans",sans-serif;
+  --latin:"Cormorant Garamond",Georgia,serif;
+
+  /* --- Motion --- */
+  --ease:cubic-bezier(.22,1,.36,1);
+  --ease-out:cubic-bezier(.16,1,.3,1);
+  --radius:4px;
+
+  /* --- Metric --- */
+  --wrap:1240px;
+  --pad:clamp(20px,4vw,56px);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--gothic);
+  font-size:16px;
+  line-height:1.75;
+  font-feature-settings:"palt" 1;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit}
+::selection{background:var(--shu-pale);color:var(--shu-2)}
+:focus-visible{outline:2px solid var(--shu);outline-offset:3px;border-radius:2px}
+
+.wrap{width:100%;max-width:var(--wrap);margin-inline:auto;padding-inline:var(--pad)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip{position:absolute;left:-9999px;top:0;z-index:200;background:var(--ai);color:#fff;padding:12px 20px}
+.skip:focus{left:12px;top:12px}
+
+/* ---------- 和纸底纹（极淡噪点） ---------- */
+.washi::before{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:0;opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.055'/%3E%3C/svg%3E");
+}
+/* ---------- 青海波 ---------- */
+.seigaiha{
+  position:absolute;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='84' height='42' viewBox='0 0 84 42'%3E%3Cg fill='none' stroke='%231F3A5C' stroke-opacity='.5' stroke-width='1'%3E%3Cpath d='M0 42a42 42 0 0 1 84 0'/%3E%3Cpath d='M13 42a29 29 0 0 1 58 0'/%3E%3Cpath d='M26 42a16 16 0 0 1 32 0'/%3E%3Cpath d='M-42 21a42 42 0 0 1 84 0'/%3E%3Cpath d='M-29 21a29 29 0 0 1 58 0'/%3E%3Cpath d='M-16 21a16 16 0 0 1 32 0'/%3E%3Cpath d='M42 21a42 42 0 0 1 84 0'/%3E%3Cpath d='M55 21a29 29 0 0 1 58 0'/%3E%3Cpath d='M68 21a16 16 0 0 1 32 0'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:84px 42px;
+}
+
+/* ---------- 印章 ---------- */
+.hanko{
+  display:grid;place-items:center;background:var(--shu);color:#FFF9F4;
+  font-family:var(--mincho);font-weight:700;line-height:1;
+  border-radius:5px;flex:none;
+  box-shadow:0 1px 0 0 var(--shu-2) inset;
+}
+
+/* ---------- 章节头 ---------- */
+.eyebrow{
+  display:inline-flex;align-items:center;gap:12px;
+  font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--kin);font-weight:700;margin:0 0 20px;
+}
+.eyebrow::after{content:"";width:clamp(28px,6vw,64px);height:1px;background:var(--kin-2)}
+.eyebrow .jp{font-family:var(--mincho);letter-spacing:.14em;color:var(--ai-3);font-weight:600;text-transform:none}
+
+h1,h2,h3{font-family:var(--mincho);font-weight:700;line-height:1.24;letter-spacing:.01em;margin:0;text-wrap:balance}
+h2{font-size:clamp(28px,3.6vw,46px);color:var(--ai)}
+.lede{font-size:clamp(15px,1.15vw,17px);color:var(--text-3);max-width:60ch;margin:20px 0 0;line-height:1.9}
+
+/* ---------- 按钮 ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  min-height:52px;padding:0 30px;border-radius:3px;
+  font-family:var(--gothic);font-weight:700;font-size:15px;letter-spacing:.06em;
+  border:1px solid transparent;cursor:pointer;
+  transition:transform .32s var(--ease),box-shadow .32s var(--ease),background-color .25s ease,color .25s ease,border-color .25s ease;
+}
+.btn--primary{background:var(--shu);color:#FFF9F4;box-shadow:0 1px 2px rgba(120,32,20,.18)}
+.btn--primary:hover{background:var(--shu-2);transform:translateY(-2px);box-shadow:0 8px 22px -8px rgba(120,32,20,.5)}
+.btn--ghost{background:transparent;color:var(--ai);border-color:color-mix(in oklab,var(--ai) 28%,transparent)}
+.btn--ghost:hover{background:var(--ai);color:#FFFDF7;border-color:var(--ai);transform:translateY(-2px)}
+.btn--light{background:transparent;color:#F6EFE1;border-color:rgba(246,239,225,.42)}
+.btn--light:hover{background:#F6EFE1;color:var(--ai);transform:translateY(-2px)}
+.btn svg{width:16px;height:16px;transition:transform .32s var(--ease)}
+.btn:hover svg{transform:translateX(4px)}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav{position:sticky;top:0;z-index:100;background:color-mix(in oklab,var(--kinari) 88%,transparent);backdrop-filter:blur(14px) saturate(140%);transition:box-shadow .3s ease,background-color .3s ease}
+.nav::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--line-soft);transition:background-color .3s ease}
+.nav.is-stuck{background:color-mix(in oklab,var(--kinari) 95%,transparent);box-shadow:0 6px 26px -18px rgba(31,58,92,.45)}
+.nav.is-stuck::after{background:var(--line)}
+.nav-in{display:flex;align-items:center;gap:32px;height:76px}
+.brand{display:flex;align-items:center;gap:13px;flex:none}
+.brand .hanko{width:38px;height:38px;font-size:19px}
+.brand-txt{display:flex;flex-direction:column;line-height:1.15}
+.brand-txt b{font-family:var(--mincho);font-size:18px;font-weight:700;letter-spacing:.1em;color:var(--ai)}
+.brand-txt span{font-size:10px;letter-spacing:.24em;color:var(--text-3);text-transform:uppercase}
+.nav-links{display:flex;align-items:center;gap:4px;margin-left:auto}
+.nav-links a{
+  position:relative;padding:10px 14px;border-radius:3px;
+  font-size:14px;font-weight:500;color:var(--text-2);letter-spacing:.04em;
+  transition:color .2s ease,background-color .2s ease;
+}
+.nav-links a::after{content:"";position:absolute;left:14px;right:14px;bottom:5px;height:1px;background:var(--shu);transform:scaleX(0);transform-origin:left;transition:transform .34s var(--ease)}
+.nav-links a:hover{color:var(--ai)}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-links a .jp{font-family:var(--mincho);font-size:11px;color:var(--ai-3);margin-left:6px}
+.nav-cta{display:flex;align-items:center;gap:14px;flex:none}
+.nav-cta .login{font-size:14px;font-weight:500;color:var(--text-2);padding:10px 6px}
+.nav-cta .login:hover{color:var(--ai)}
+.nav-cta .btn{min-height:44px;padding:0 22px;font-size:14px}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{position:relative;overflow:hidden;padding:clamp(44px,6vw,84px) 0 clamp(60px,7vw,104px)}
+.hero .seigaiha{top:-70px;right:-120px;width:min(720px,72vw);height:520px;opacity:.16;
+  -webkit-mask-image:radial-gradient(120% 100% at 78% 22%,#000 4%,transparent 68%);
+          mask-image:radial-gradient(120% 100% at 78% 22%,#000 4%,transparent 68%)}
+.hero-vertical{
+  position:absolute;left:calc(var(--pad) - 4px);top:clamp(120px,16vw,220px);
+  writing-mode:vertical-rl;font-family:var(--mincho);font-size:13px;letter-spacing:.42em;
+  color:var(--kin);opacity:.6;user-select:none;pointer-events:none;
+}
+.hero-in{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,.94fr);gap:clamp(28px,4vw,64px);align-items:center}
+
+.hero h1{font-size:clamp(28px,4.35vw,56px);color:var(--ai);letter-spacing:.005em}
+/* 跨行安全的高亮：用背景渐变而非绝对定位色块 */
+.hero h1 em{
+  font-style:normal;color:var(--shu);
+  background:linear-gradient(to top,var(--shu-pale) 0 .3em,transparent .3em);
+  padding-bottom:.04em;
+}
+.hero .jp-line{
+  font-family:var(--mincho);font-size:clamp(15px,1.5vw,20px);color:var(--kin);
+  letter-spacing:.24em;margin:0 0 22px;font-weight:600;
+}
+.hero .lede{font-size:clamp(15px,1.2vw,17.5px);max-width:52ch}
+.hero .lede b{color:var(--ai);font-weight:700;white-space:nowrap}
+.hero-acts{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+.hero-notes{display:flex;flex-wrap:wrap;gap:8px 26px;margin-top:26px;padding:0;list-style:none}
+.hero-notes li{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-3)}
+.hero-notes svg{width:14px;height:14px;color:var(--matcha);flex:none}
+
+.hero-stats{display:flex;gap:0;margin-top:44px;border-top:1px solid var(--line);padding-top:24px}
+.hero-stats div{flex:1;padding-right:18px}
+.hero-stats div+div{border-left:1px solid var(--line);padding-left:22px}
+.hero-stats dt{font-family:var(--latin);font-size:clamp(26px,2.9vw,36px);font-weight:600;color:var(--ai);line-height:1;font-variant-numeric:tabular-nums}
+.hero-stats dd{margin:8px 0 0;font-size:12.5px;color:var(--text-3);letter-spacing:.05em}
+
+.hero-vis{position:relative}
+.hero-vis svg{width:100%;height:auto}
+.hero-vis figcaption{margin-top:6px;text-align:center;font-size:12px;color:var(--text-3);letter-spacing:.08em}
+.hero-vis figcaption .latin{font-family:var(--latin);font-style:italic;color:var(--kin);font-size:15px}
+
+/* ============================================================
+   GRAPH
+   ============================================================ */
+.graph{position:relative;padding:clamp(64px,8vw,116px) 0;background:var(--kinari-2)}
+.graph::before,.graph::after{content:"";position:absolute;left:0;right:0;height:1px;background:var(--line-soft)}
+.graph::before{top:0}.graph::after{bottom:0}
+.graph-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.85fr);gap:clamp(24px,4vw,56px);align-items:end}
+
+.filters{display:flex;flex-wrap:wrap;gap:10px;margin:34px 0 0}
+.chip{
+  display:inline-flex;align-items:center;gap:9px;min-height:44px;padding:0 20px;
+  border-radius:999px;border:1px solid var(--line);background:var(--surface);
+  font-size:13.5px;font-weight:500;color:var(--text-2);cursor:pointer;
+  transition:all .28s var(--ease);
+}
+.chip .dot{width:8px;height:8px;border-radius:50%;background:currentColor;opacity:.85;flex:none}
+.chip:hover{border-color:var(--ai-3);color:var(--ai);transform:translateY(-1px)}
+.chip[aria-pressed="true"]{background:var(--ai);border-color:var(--ai);color:#FFFDF7;box-shadow:0 8px 20px -10px rgba(31,58,92,.6)}
+.chip .n{font-family:var(--latin);font-size:14px;opacity:.62;font-variant-numeric:tabular-nums}
+
+.graph-stage{position:relative;margin-top:clamp(30px,4vw,52px)}
+.graph-board{
+  position:relative;border:1px solid var(--line);border-radius:4px;
+  background:
+    radial-gradient(120% 90% at 50% 100%, color-mix(in oklab,var(--ai) 5%,transparent), transparent 62%),
+    var(--surface);
+  padding:clamp(10px,2vw,22px);
+  overflow:hidden;
+}
+.graph-board .seigaiha{inset:auto 0 0 0;height:180px;opacity:.09;
+  -webkit-mask-image:linear-gradient(to top,#000,transparent);
+          mask-image:linear-gradient(to top,#000,transparent)}
+#graph-svg{position:relative;z-index:1;width:100%;height:auto}
+
+.nm{cursor:pointer;transition:opacity .4s var(--ease)}
+.nm circle.nm-dot{transition:r .35s var(--ease),fill .3s ease,stroke-width .3s ease}
+.nm text{font-family:var(--mincho);pointer-events:none;transition:fill .25s ease}
+.nm:hover circle.nm-dot,.nm:focus-visible circle.nm-dot{stroke-width:3}
+.nm.is-dim{opacity:.14;pointer-events:none}
+.edge{transition:opacity .45s var(--ease),stroke .3s ease}
+.edge.is-dim{opacity:.06}
+.edge.is-lit{stroke:var(--shu);stroke-opacity:.85;stroke-width:1.6}
+.ring{transform-box:fill-box;transform-origin:center;animation:pulse 4.2s var(--ease) infinite}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.34);opacity:0}}
+
+.tip{
+  position:absolute;z-index:20;pointer-events:none;opacity:0;transform:translate(-50%,-118%);
+  background:var(--ai);color:#F4EFE4;padding:11px 15px;border-radius:3px;
+  font-size:12.5px;line-height:1.55;white-space:nowrap;
+  box-shadow:0 12px 30px -12px rgba(20,39,61,.6);
+  transition:opacity .22s ease,transform .3s var(--ease);
+}
+.tip.on{opacity:1;transform:translate(-50%,-130%)}
+.tip b{font-family:var(--mincho);font-size:13.5px;display:block;letter-spacing:.04em}
+.tip i{font-style:normal;color:var(--kin-2);font-size:11.5px;letter-spacing:.08em}
+
+.legend{display:flex;flex-wrap:wrap;gap:10px 30px;margin-top:22px;padding:0;list-style:none}
+.legend li{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-3)}
+.legend .sw{width:11px;height:11px;border-radius:50%;flex:none;box-shadow:0 0 0 3px color-mix(in oklab,currentColor 18%,transparent)}
+
+.graph-foot{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,3vw,40px);margin-top:clamp(34px,4vw,54px)}
+.graph-foot article{border-top:2px solid var(--kin-pale);padding-top:18px}
+.graph-foot h3{font-size:17px;color:var(--ai);margin-bottom:8px}
+.graph-foot p{margin:0;font-size:14px;color:var(--text-3);line-height:1.8}
+.graph-foot .num{font-family:var(--latin);font-size:13px;color:var(--kin);letter-spacing:.16em;display:block;margin-bottom:6px}
+
+/* ============================================================
+   ROUTE (N5 → N1)
+   ============================================================ */
+.route{padding:clamp(64px,8vw,116px) 0}
+.route-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap}
+.route-track{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:18px;margin-top:clamp(38px,5vw,64px)}
+.route-track::before{
+  content:"";position:absolute;left:6%;right:6%;top:27px;height:1px;
+  background:repeating-linear-gradient(to right,var(--kin-2) 0 7px,transparent 7px 15px);
+}
+.stop{position:relative;text-align:center;padding-top:0}
+.stop .seal{
+  position:relative;z-index:1;display:grid;place-items:center;width:56px;height:56px;margin:0 auto;
+  border-radius:50%;background:var(--surface);border:1px solid var(--line);
+  font-family:var(--latin);font-size:19px;font-weight:600;color:var(--ai);
+  transition:all .34s var(--ease);
+}
+.stop:hover .seal{background:var(--shu);border-color:var(--shu);color:#FFF9F4;transform:translateY(-3px)}
+.stop.is-now .seal{background:var(--shu);border-color:var(--shu);color:#FFF9F4;box-shadow:0 0 0 5px var(--shu-pale)}
+.stop.is-now .seal::after{
+  content:"";position:absolute;inset:-7px;border-radius:50%;border:1px dashed var(--shu);opacity:.5;
+}
+.stop h3{font-size:16px;margin:18px 0 4px;color:var(--ai)}
+.stop .jp{font-family:var(--mincho);font-size:12px;color:var(--kin);letter-spacing:.16em;display:block;margin-bottom:10px}
+.stop p{margin:0;font-size:13px;color:var(--text-3);line-height:1.7}
+.stop .cnt{display:block;margin-top:12px;font-family:var(--latin);font-size:13px;color:var(--ai-3);letter-spacing:.06em}
+
+/* ============================================================
+   TOOLS
+   ============================================================ */
+.tools{padding:clamp(64px,8vw,116px) 0;background:var(--kinari-2);position:relative}
+.tools-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(14px,1.8vw,22px);margin-top:clamp(34px,4vw,56px)}
+.tool{
+  position:relative;display:flex;flex-direction:column;overflow:hidden;
+  background:var(--surface);border:1px solid var(--line);border-radius:4px;
+  padding:clamp(22px,2.4vw,32px);
+  transition:transform .4s var(--ease),box-shadow .4s var(--ease),border-color .3s ease;
+}
+.tool:hover{transform:translateY(-4px);box-shadow:0 22px 44px -28px rgba(31,58,92,.5);border-color:color-mix(in oklab,var(--ai) 26%,transparent)}
+.tool--a{grid-column:span 6}
+.tool--b{grid-column:span 3}
+.tool--c{grid-column:span 3}
+.tool .tag{
+  display:inline-flex;align-items:center;gap:7px;align-self:flex-start;
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;
+  color:var(--kin);margin-bottom:16px;
+}
+.tool .tag::before{content:"";width:16px;height:1px;background:var(--kin-2)}
+.tool h3{font-size:clamp(19px,1.7vw,23px);color:var(--ai);line-height:1.4}
+.tool .jp{font-family:var(--mincho);font-size:13px;color:var(--ai-3);letter-spacing:.14em;display:block;margin-top:9px;font-weight:600}
+.tool p{margin:14px 0 0;font-size:14px;color:var(--text-3);line-height:1.8}
+.tool .vis{margin-top:auto;padding-top:26px}
+
+/* 音调曲线 */
+.pitch{position:relative}
+.pitch svg{width:100%;height:auto}
+.pitch .score{
+  position:absolute;right:6px;top:2px;text-align:center;
+}
+.pitch .score b{display:block;font-family:var(--latin);font-size:30px;font-weight:600;color:var(--shu);line-height:1}
+.pitch .score span{font-size:10.5px;color:var(--text-3);letter-spacing:.14em}
+
+/* 五十音格 */
+.kana-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
+.kana-grid span{
+  aspect-ratio:1;display:grid;place-items:center;border-radius:2px;
+  font-family:var(--mincho);font-size:14px;
+  background:color-mix(in oklab,var(--ai) 8%,transparent);color:var(--ai-3);
+  transition:background-color .3s ease,color .3s ease;
+}
+.kana-grid span.on{background:var(--ai);color:#FFFDF7}
+.kana-grid span.gold{background:var(--kin);color:#FFFDF7}
+.tool--b:hover .kana-grid span{background:color-mix(in oklab,var(--ai) 14%,transparent)}
+.tool--b:hover .kana-grid span.on{background:var(--ai)}
+
+/* 波形 */
+.wave{display:flex;align-items:center;gap:3px;height:64px}
+.wave i{flex:1;border-radius:1px;background:color-mix(in oklab,var(--mizu) 45%,transparent);transition:background-color .3s ease}
+.tool--c:hover .wave i{background:color-mix(in oklab,var(--mizu) 78%,transparent)}
+.scenes{display:flex;flex-wrap:wrap;gap:7px;margin-top:18px}
+.scenes span{font-size:11.5px;font-family:var(--mincho);letter-spacing:.08em;padding:5px 12px;border:1px solid var(--line);border-radius:999px;color:var(--text-3)}
+
+/* ============================================================
+   今日の一言
+   ============================================================ */
+.quote{position:relative;overflow:hidden;padding:clamp(64px,8vw,116px) 0;background:var(--sumi);color:#EFE7D8}
+.quote .seigaiha{inset:0;opacity:.1;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='84' height='42' viewBox='0 0 84 42'%3E%3Cg fill='none' stroke='%23EFE7D8' stroke-opacity='.55' stroke-width='1'%3E%3Cpath d='M0 42a42 42 0 0 1 84 0'/%3E%3Cpath d='M13 42a29 29 0 0 1 58 0'/%3E%3Cpath d='M26 42a16 16 0 0 1 32 0'/%3E%3Cpath d='M-42 21a42 42 0 0 1 84 0'/%3E%3Cpath d='M-29 21a29 29 0 0 1 58 0'/%3E%3Cpath d='M-16 21a16 16 0 0 1 32 0'/%3E%3Cpath d='M42 21a42 42 0 0 1 84 0'/%3E%3Cpath d='M55 21a29 29 0 0 1 58 0'/%3E%3Cpath d='M68 21a16 16 0 0 1 32 0'/%3E%3C/g%3E%3C/svg%3E")}
+.quote-in{position:relative;z-index:1;display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(32px,5vw,80px);align-items:center}
+.quote-tate{
+  writing-mode:vertical-rl;font-family:var(--mincho);font-weight:700;
+  font-size:clamp(27px,3.5vw,45px);letter-spacing:.15em;line-height:1.14;
+  color:#FBF6EA;height:clamp(290px,28vw,385px);
+}
+.quote-tate span,.quote-tate em{display:block;font-style:normal}
+.quote-tate em{color:var(--kin-2)}
+.quote-body .yomi{
+  font-family:var(--mincho);font-size:13.5px;letter-spacing:.24em;color:var(--kin-2);
+  margin:0 0 18px;writing-mode:horizontal-tb;
+}
+.quote-body h2{color:#FBF6EA;font-size:clamp(22px,2.3vw,30px);letter-spacing:.02em}
+.quote-body p{font-size:15px;line-height:1.95;color:#BFB5A2;max-width:44ch;margin:16px 0 0}
+.quote-body .rule{width:52px;height:1px;background:var(--kin);opacity:.6;margin:26px 0}
+.quote-body .meta{display:flex;gap:28px;flex-wrap:wrap}
+.quote-body .meta div b{display:block;font-family:var(--latin);font-size:24px;font-weight:600;color:var(--kin-2);line-height:1;font-variant-numeric:tabular-nums}
+.quote-body .meta div span{font-size:12px;letter-spacing:.08em;color:#9A9182}
+
+/* ============================================================
+   VOICES
+   ============================================================ */
+.voices{padding:clamp(64px,8vw,116px) 0}
+.voices-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,2.4vw,32px);margin-top:clamp(34px,4vw,56px)}
+.voice{position:relative;padding-top:34px;display:flex;flex-direction:column}
+.voice::before{
+  content:"「";position:absolute;left:-4px;top:-14px;
+  font-family:var(--mincho);font-size:64px;line-height:1;color:var(--kin-pale);
+}
+.voice blockquote{margin:0 0 24px;font-family:var(--mincho);font-size:16.5px;line-height:1.95;color:var(--sumi-2);letter-spacing:.01em}
+.voice figcaption{display:flex;align-items:center;gap:13px;margin-top:auto;padding-top:20px;border-top:1px solid var(--line-soft)}
+.voice .av{
+  width:42px;height:42px;border-radius:50%;display:grid;place-items:center;flex:none;
+  font-family:var(--mincho);font-size:17px;font-weight:700;
+  background:var(--ai-pale);color:var(--ai);
+}
+.voice .who b{display:block;font-size:14px;font-weight:700;color:var(--ai);letter-spacing:.04em}
+.voice .who span{font-size:12px;color:var(--text-3)}
+
+/* ============================================================
+   CTA
+   ============================================================ */
+.cta{position:relative;overflow:hidden;background:var(--ai);color:#F2EADA}
+.cta .seigaiha{
+  inset:0;opacity:.13;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='84' height='42' viewBox='0 0 84 42'%3E%3Cg fill='none' stroke='%23F2EADA' stroke-opacity='.6' stroke-width='1'%3E%3Cpath d='M0 42a42 42 0 0 1 84 0'/%3E%3Cpath d='M13 42a29 29 0 0 1 58 0'/%3E%3Cpath d='M26 42a16 16 0 0 1 32 0'/%3E%3Cpath d='M-42 21a42 42 0 0 1 84 0'/%3E%3Cpath d='M-29 21a29 29 0 0 1 58 0'/%3E%3Cpath d='M-16 21a16 16 0 0 1 32 0'/%3E%3Cpath d='M42 21a42 42 0 0 1 84 0'/%3E%3Cpath d='M55 21a29 29 0 0 1 58 0'/%3E%3Cpath d='M68 21a16 16 0 0 1 32 0'/%3E%3C/g%3E%3C/svg%3E");
+  -webkit-mask-image:linear-gradient(160deg,#000,transparent 72%);
+          mask-image:linear-gradient(160deg,#000,transparent 72%);
+}
+.cta-in{position:relative;z-index:1;padding:clamp(64px,8vw,110px) 0}
+.cta .eyebrow{color:var(--kin-2)}
+.cta .eyebrow::after{background:var(--kin)}
+.cta .eyebrow .jp{color:#B9C6D6}
+.cta h2{color:#FDF8EE;font-size:clamp(30px,4vw,52px)}
+.cta p{color:#BFCCDA;font-size:17px;max-width:46ch;margin:22px 0 0;line-height:1.9}
+.cta-acts{display:flex;flex-wrap:wrap;gap:14px;margin-top:38px}
+.cta p.cta-note{margin-top:22px;font-size:13px;color:#9FB0C2;letter-spacing:.04em;max-width:none}
+.cta-mark{
+  position:absolute;right:clamp(-10px,2vw,40px);bottom:-5%;z-index:0;
+  font-family:var(--mincho);font-size:clamp(150px,20vw,290px);font-weight:700;
+  color:rgba(242,234,218,.12);line-height:1;letter-spacing:.02em;user-select:none;pointer-events:none;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.foot{background:var(--kinari);padding:clamp(48px,6vw,80px) 0 34px;position:relative}
+.foot-in{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr));gap:clamp(28px,3.5vw,52px)}
+.foot .brand{margin-bottom:18px}
+.foot-desc{font-size:13.5px;color:var(--text-3);max-width:34ch;line-height:1.85}
+.foot-tate{
+  writing-mode:vertical-rl;font-family:var(--mincho);font-size:12px;letter-spacing:.26em;
+  color:var(--kin);opacity:.7;height:186px;margin-top:24px;
+}
+.foot h3{font-size:13px;font-family:var(--gothic);font-weight:700;letter-spacing:.16em;color:var(--ai);margin:0 0 16px;text-transform:uppercase}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:11px}
+.foot ul a{font-size:14px;color:var(--text-3);transition:color .2s ease}
+.foot ul a:hover{color:var(--shu)}
+.asanoha{width:100%;height:14px;margin:clamp(38px,5vw,58px) 0 22px;color:var(--kin-2);opacity:.55}
+.foot-bot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:12.5px;color:var(--text-3);letter-spacing:.04em}
+.foot-bot .links{display:flex;gap:22px}
+.foot-bot a:hover{color:var(--ai)}
+
+/* ============================================================
+   REVEAL
+   ============================================================ */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease-out),transform .8s var(--ease-out)}
+.rv.in{opacity:1;transform:none}
+.rv[data-d="1"]{transition-delay:.09s}
+.rv[data-d="2"]{transition-delay:.18s}
+.rv[data-d="3"]{transition-delay:.27s}
+.rv[data-d="4"]{transition-delay:.36s}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width:1080px){
+  .nav-links{display:none}
+  .hero-in{grid-template-columns:1fr;gap:48px}
+  .hero-vis{max-width:520px;margin-inline:auto}
+  .hero-vertical{display:none}
+  .graph-head{grid-template-columns:1fr;align-items:start}
+  .tool--a{grid-column:span 12}
+  .tool--b,.tool--c{grid-column:span 6}
+  .voices-grid{grid-template-columns:1fr;gap:36px}
+  .graph-foot{grid-template-columns:1fr;gap:22px}
+  .foot-in{grid-template-columns:1fr 1fr;gap:34px}
+}
+@media (max-width:820px){
+  .route-track{grid-template-columns:1fr;gap:0;text-align:left}
+  .route-track::before{
+    left:27px;right:auto;top:0;bottom:0;width:1px;height:auto;
+    background:repeating-linear-gradient(to bottom,var(--kin-2) 0 7px,transparent 7px 15px);
+  }
+  .stop{display:grid;grid-template-columns:56px 1fr;gap:0 22px;padding:0 0 32px;text-align:left}
+  .stop .seal{margin:0}
+  .stop .body{padding-top:4px}
+  .stop h3{margin-top:0}
+}
+@media (max-width:720px){
+  .quote-in{grid-template-columns:1fr;gap:34px}
+  .quote-tate{writing-mode:horizontal-tb;height:auto;font-size:clamp(26px,7vw,38px);letter-spacing:.1em}
+  .hero-stats{flex-direction:column;gap:20px;padding-top:20px}
+  .hero-stats div{padding-right:0}
+  .hero-stats div+div{border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:18px}
+  .tool--b,.tool--c{grid-column:span 12}
+  .foot-in{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .rv{opacity:1;transform:none;transition:none}
+  .ring{animation:none;opacity:0}
+  *{transition-duration:.01ms!important;animation-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">跳到主要内容</a>
+
+<!-- ================= NAV ================= -->
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top" aria-label="言の葉 KOTONOHA 首页">
+      <span class="hanko" aria-hidden="true">葉</span>
+      <span class="brand-txt"><b>言の葉</b><span>Kotonoha</span></span>
+    </a>
+    <nav class="nav-links" aria-label="主导航">
+      <a href="#graph">知识图谱<span class="jp">知識マップ</span></a>
+      <a href="#route">分级路线<span class="jp">学習ルート</span></a>
+      <a href="#tools">学习工具<span class="jp">道具</span></a>
+      <a href="#voices">学习者<span class="jp">学習者</span></a>
+    </nav>
+    <div class="nav-cta">
+      <a class="login" href="#">登录</a>
+      <a class="btn btn--primary" href="#cta">免费开始</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="top">
+  <div class="seigaiha" aria-hidden="true"></div>
+  <p class="hero-vertical" aria-hidden="true">日本語の知識地図</p>
+  <div class="wrap hero-in">
+
+    <div class="hero-copy">
+      <p class="eyebrow rv">知识图谱 · 日本語学習<span class="jp">ことのは</span></p>
+      <p class="jp-line rv" data-d="1">日本語を、地図で学ぶ。</p>
+      <h1 class="rv" data-d="1">把散落的日语，<br><em>连成一张能走的地图</em>。</h1>
+      <p class="lede rv" data-d="2">
+        五十音、助詞、敬語、慣用句——它们本来就有关系。<b>言の葉</b> 把每个知识点挂进同一张图谱：
+        点开一个「て形」，就能看见它牵出的 21 条连接，以及你还没点亮的那几条。
+      </p>
+
+      <div class="hero-acts rv" data-d="3">
+        <a class="btn btn--primary" href="#cta">
+          从五十音开始
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 10h11M10.5 5l5 5-5 5"/></svg>
+        </a>
+        <a class="btn btn--ghost" href="#graph">先看看这张图</a>
+      </div>
+
+      <ul class="hero-notes rv" data-d="3">
+        <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 8.5l3.2 3.2L13 5"/></svg>无需信用卡</li>
+        <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 8.5l3.2 3.2L13 5"/></svg>首月全部图谱免费</li>
+        <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 8.5l3.2 3.2L13 5"/></svg>3 分钟建好自己的第一张图</li>
+      </ul>
+
+      <dl class="hero-stats rv" data-d="4">
+        <div><dt>1,280</dt><dd>图谱内的知识点</dd></div>
+        <div><dt>86</dt><dd>组语法关联</dd></div>
+        <div><dt>12,000+</dt><dd>在用的学习者</dd></div>
+      </dl>
+    </div>
+
+    <figure class="hero-vis rv" data-d="2" style="margin:0">
+      <svg id="hero-svg" viewBox="0 0 420 560" role="img" aria-label="以富士山轮廓排列的日语知识点示意图，山脚为五十音，山顶为 N1 语感">
+        <defs>
+          <linearGradient id="mtn" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0" stop-color="#1F3A5C" stop-opacity=".07"/>
+            <stop offset="1" stop-color="#1F3A5C" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="route" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0" stop-color="#C8AD78" stop-opacity="0"/>
+            <stop offset=".5" stop-color="#A8874A" stop-opacity=".9"/>
+            <stop offset="1" stop-color="#B83A2C" stop-opacity=".85"/>
+          </linearGradient>
+        </defs>
+        <!-- 山体轮廓 -->
+        <path d="M210 62 L378 498 Q210 520 42 498 Z" fill="url(#mtn)"/>
+        <path d="M210 62 L378 498" fill="none" stroke="#1F3A5C" stroke-opacity=".18" stroke-width="1" stroke-dasharray="3 6"/>
+        <path d="M210 62 L42 498" fill="none" stroke="#1F3A5C" stroke-opacity=".18" stroke-width="1" stroke-dasharray="3 6"/>
+        <!-- 登山路线 -->
+        <path d="M210 500 C150 430 236 396 190 330 C152 276 232 250 212 190 C198 148 214 122 210 86"
+              fill="none" stroke="url(#route)" stroke-width="1.6" stroke-dasharray="5 7" stroke-linecap="round"/>
+        <!-- 节点由 JS 注入 -->
+        <g id="hero-nodes"></g>
+        <!-- 山脚基线 -->
+        <line x1="30" y1="500" x2="390" y2="500" stroke="#A8874A" stroke-opacity=".45" stroke-width="1"/>
+        <text x="34" y="524" font-family="Cormorant Garamond, serif" font-size="14" font-weight="600" fill="#A8874A" font-style="italic">N5</text>
+        <text x="386" y="524" text-anchor="end" font-family="Cormorant Garamond, serif" font-size="12" fill="#9A9184" font-style="italic">五十音から</text>
+        <!-- 山顶标注 -->
+        <line x1="222" y1="106" x2="250" y2="94" stroke="#C8AD78" stroke-opacity=".8" stroke-width="1"/>
+        <text x="254" y="98" font-family="Cormorant Garamond, serif" font-size="14" font-weight="600" fill="#B83A2C" font-style="italic">N1</text>
+        <text x="254" y="113" font-family="'Shippori Mincho B1', serif" font-size="10" fill="#B83A2C" opacity=".75" letter-spacing=".1em">語感</text>
+      </svg>
+      <figcaption><span class="latin">Kotonoha Map</span> · 你的知识山，你随时知道自己在哪一段</figcaption>
+    </figure>
+
+  </div>
+</section>
+
+<!-- ================= GRAPH ================= -->
+<section class="graph" id="graph">
+  <div class="wrap">
+    <div class="graph-head">
+      <div>
+        <p class="eyebrow rv">核心功能<span class="jp">知識マップ</span></p>
+        <h2 class="rv" data-d="1">不是课程表，是一张图。</h2>
+      </div>
+      <p class="lede rv" data-d="2" style="margin:0">
+        每一层是一段坡。山脚是你已经熟悉的五十音，山腰是动词变形与敬语，
+        山顶是 N1 才讲究的语感。你不是在"上完一节课"，而是在往上走。
+      </p>
+    </div>
+
+    <div class="filters rv" data-d="2" role="group" aria-label="按知识点类型筛选图谱">
+      <button class="chip" type="button" data-k="all" aria-pressed="true">全部<span class="n">31</span></button>
+      <button class="chip" type="button" data-k="kana" aria-pressed="false"><span class="dot" style="color:#1F3A5C"></span>假名<span class="n">9</span></button>
+      <button class="chip" type="button" data-k="word" aria-pressed="false"><span class="dot" style="color:#6E8B99"></span>词汇<span class="n">11</span></button>
+      <button class="chip" type="button" data-k="grammar" aria-pressed="false"><span class="dot" style="color:#B83A2C"></span>语法<span class="n">8</span></button>
+      <button class="chip" type="button" data-k="keigo" aria-pressed="false"><span class="dot" style="color:#A8874A"></span>敬语<span class="n">3</span></button>
+    </div>
+
+    <div class="graph-stage rv" data-d="3">
+      <div class="graph-board">
+        <div class="seigaiha" aria-hidden="true"></div>
+        <svg id="graph-svg" viewBox="0 0 860 640" role="img"
+             aria-label="日语知识图谱：31 个知识点按 N5 到 N1 分层排布，连线表示知识点之间的关联">
+        </svg>
+        <div class="tip" id="tip" role="status" aria-live="polite"></div>
+      </div>
+      <ul class="legend">
+        <li><span class="sw" style="background:#1F3A5C;color:#1F3A5C"></span>假名 · 字形与发音</li>
+        <li><span class="sw" style="background:#6E8B99;color:#6E8B99"></span>词汇 · 词性与用法</li>
+        <li><span class="sw" style="background:#B83A2C;color:#B83A2C"></span>语法 · 变形与接续</li>
+        <li><span class="sw" style="background:#A8874A;color:#A8874A"></span>敬语 · 场合与语域</li>
+        <li style="color:#8A8175">悬停节点查看关联 · 点击上方标签筛选</li>
+      </ul>
+    </div>
+
+    <div class="graph-foot">
+      <article class="rv"><span class="num">01</span><h3>点一个，亮一片</h3><p>每个知识点都标注了前置与延伸。你点开「受身」，图会告诉你它需要先掌握「て形」。</p></article>
+      <article class="rv" data-d="1"><span class="num">02</span><h3>空白处就是待办</h3><p>未点亮的灰节点，就是你的下一步。不需要任何人给你布置作业。</p></article>
+      <article class="rv" data-d="2"><span class="num">03</span><h3>一张图，一条路线</h3><p>图谱会自动按你的掌握情况，生成当天该补的 3 个薄弱连接。</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ROUTE ================= -->
+<section class="route" id="route">
+  <div class="wrap">
+    <div class="route-head">
+      <div>
+        <p class="eyebrow rv">分级路线<span class="jp">学習ルート</span></p>
+        <h2 class="rv" data-d="1">五段坡，一条路。</h2>
+      </div>
+      <p class="lede rv" data-d="2" style="margin:0;max-width:38ch">
+        对标 JLPT 五个级别，但按知识点数量而非课时来划分进度。
+      </p>
+    </div>
+
+    <div class="route-track">
+      <div class="stop is-now rv">
+        <span class="seal">N5</span>
+        <div class="body">
+          <span class="jp">入門</span>
+          <h3>五十音与寒暄</h3>
+          <p>平假名、片假名、基本句型，能自我介绍</p>
+          <span class="cnt">186 个知识点</span>
+        </div>
+      </div>
+      <div class="stop rv" data-d="1">
+        <span class="seal">N4</span>
+        <div class="body">
+          <span class="jp">基礎</span>
+          <h3>动词变形</h3>
+          <p>て形、た形、ない形，日常对话不卡壳</p>
+          <span class="cnt">264 个知识点</span>
+        </div>
+      </div>
+      <div class="stop rv" data-d="2">
+        <span class="seal">N3</span>
+        <div class="body">
+          <span class="jp">中級</span>
+          <h3>条件与敬语入门</h3>
+          <p>ば・たら・なら、可能形，能读短文</p>
+          <span class="cnt">312 个知识点</span>
+        </div>
+      </div>
+      <div class="stop rv" data-d="3">
+        <span class="seal">N2</span>
+        <div class="body">
+          <span class="jp">上級</span>
+          <h3>抽象表达与惯用</h3>
+          <p>使役、授受、惯用句，能看新闻与小说</p>
+          <span class="cnt">356 个知识点</span>
+        </div>
+      </div>
+      <div class="stop rv" data-d="4">
+        <span class="seal">N1</span>
+        <div class="body">
+          <span class="jp">完成</span>
+          <h3>语感与文体</h3>
+          <p>文语残留、语域差异，能读社论与文学</p>
+          <span class="cnt">162 个知识点</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TOOLS ================= -->
+<section class="tools" id="tools">
+  <div class="wrap">
+    <p class="eyebrow rv">学习工具<span class="jp">道具</span></p>
+    <h2 class="rv" data-d="1">三件工具，把图走成自己的。</h2>
+
+    <div class="tools-grid">
+
+      <article class="tool tool--a rv" data-d="1">
+        <span class="tag">发音 · 跟读评分</span>
+        <h3>音调曲线对得上，才算真的会说</h3>
+        <span class="jp">はつおん・シャドーイング</span>
+        <p>录一句，系统把你的音高曲线叠在标准音上。朱红是你的，蓝色是它该有的样子——差在哪里，一眼看得见。</p>
+        <div class="vis pitch">
+          <div class="score"><b>94</b><span>SCORE</span></div>
+          <svg viewBox="0 0 380 130" role="img" aria-label="跟读音高曲线对比：蓝色虚线为标准音，朱红实线为学习者发音，两条曲线高度吻合">
+            <g stroke="#1F3A5C" stroke-opacity=".1" stroke-width="1">
+              <line x1="0" y1="20" x2="380" y2="20"/><line x1="0" y1="55" x2="380" y2="55"/>
+              <line x1="0" y1="90" x2="380" y2="90"/><line x1="0" y1="120" x2="380" y2="120"/>
+            </g>
+            <path d="M0 96 C40 96 48 30 84 30 C120 30 132 78 168 78 C204 78 216 40 252 40 C288 40 300 88 336 88 C356 88 366 70 380 66"
+                  fill="none" stroke="#1F3A5C" stroke-opacity=".45" stroke-width="2" stroke-dasharray="6 5" stroke-linecap="round"/>
+            <path d="M0 98 C40 98 46 34 84 34 C122 34 130 82 168 82 C206 82 214 44 252 44 C290 44 298 92 336 92 C356 92 368 72 380 70"
+                  fill="none" stroke="#B83A2C" stroke-width="2.4" stroke-linecap="round"/>
+            <circle cx="84" cy="34" r="3.4" fill="#B83A2C"/>
+            <circle cx="252" cy="44" r="3.4" fill="#B83A2C"/>
+            <circle cx="380" cy="70" r="4.6" fill="#B83A2C"/>
+            <text x="0" y="16" font-family="Cormorant Garamond, serif" font-size="12" fill="#8A8175" font-style="italic">High</text>
+            <text x="0" y="118" font-family="Cormorant Garamond, serif" font-size="12" fill="#8A8175" font-style="italic">Low</text>
+          </svg>
+        </div>
+      </article>
+
+      <article class="tool tool--b rv" data-d="2">
+        <span class="tag">入门 · 五十音</span>
+        <h3>五十音闯关</h3>
+        <span class="jp">五十音</span>
+        <p>笔画顺序、发音口型、片假名对照，一次记一行。</p>
+        <div class="vis kana-grid" aria-hidden="true">
+          <span class="on">あ</span><span class="on">い</span><span class="on">う</span><span class="on">え</span><span class="gold">お</span>
+          <span class="on">か</span><span class="on">き</span><span class="on">く</span><span>け</span><span>こ</span>
+          <span class="on">さ</span><span class="on">し</span><span>す</span><span>せ</span><span>そ</span>
+          <span>た</span><span>ち</span><span>つ</span><span>て</span><span>と</span>
+          <span>な</span><span>に</span><span>ぬ</span><span>ね</span><span>の</span>
+        </div>
+      </article>
+
+      <article class="tool tool--c rv" data-d="3">
+        <span class="tag">听力 · 情景</span>
+        <h3>场景精听</h3>
+        <span class="jp">場面聴解</span>
+        <p>便利店、车站、面试——把听到的拆成图上的点。</p>
+        <div class="vis">
+          <div class="wave" aria-hidden="true">
+            <i style="height:22%"></i><i style="height:48%"></i><i style="height:70%"></i><i style="height:38%"></i>
+            <i style="height:88%"></i><i style="height:56%"></i><i style="height:30%"></i><i style="height:62%"></i>
+            <i style="height:92%"></i><i style="height:44%"></i><i style="height:24%"></i><i style="height:58%"></i>
+            <i style="height:78%"></i><i style="height:34%"></i><i style="height:18%"></i><i style="height:50%"></i>
+            <i style="height:66%"></i><i style="height:28%"></i>
+          </div>
+          <div class="scenes">
+            <span>コンビニ</span><span>駅</span><span>面接</span><span>居酒屋</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= 今日の一言 ================= -->
+<section class="quote washi">
+  <div class="seigaiha" aria-hidden="true"></div>
+  <div class="wrap quote-in">
+    <p class="quote-tate rv"><span>塵も積もれば</span><em>山となる</em></p>
+    <div class="quote-body rv" data-d="1">
+      <p class="yomi">ちりも つもれば やま となる</p>
+      <h2>尘土堆积，也能成为一座山。</h2>
+      <div class="rule" aria-hidden="true"></div>
+      <p>日本人不劝你"一口气学完"。他们把这句谚语讲了上千年——每天 10 个词，一年是 3,650 个词，比 N1 要求的两倍还多。你缺的从来不是天赋，是让积累看得见的那张图。</p>
+      <div class="meta">
+        <div><b>10</b><span>每天多少个词</span></div>
+        <div><b>3,650</b><span>一年后的词汇量</span></div>
+        <div><b>2.4×</b><span>N1 门槛倍数</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= VOICES ================= -->
+<section class="voices" id="voices">
+  <div class="wrap">
+    <p class="eyebrow rv">学习者的话<span class="jp">学習者の声</span></p>
+    <h2 class="rv" data-d="1">他们把地图，走成了路。</h2>
+
+    <div class="voices-grid">
+      <figure class="voice rv" data-d="1" style="margin:0">
+        <blockquote>以前背单词像往抽屉里塞东西，塞满就忘。现在是往地图上钉钉子——钉在哪、连着谁，一眼看得见。</blockquote>
+        <figcaption>
+          <span class="av" aria-hidden="true">林</span>
+          <span class="who"><b>林 · 产品设计师</b><span>第 4 个月 · 走到 N4 中段</span></span>
+        </figcaption>
+      </figure>
+      <figure class="voice rv" data-d="2" style="margin:0">
+        <blockquote>跟读评分比我想的严格。第一次念「おはようございます」只给了 62 分，现在能稳在 94——差别全在那条音高曲线里。</blockquote>
+        <figcaption>
+          <span class="av" aria-hidden="true">陈</span>
+          <span class="who"><b>陈 · 跨境电商运营</b><span>第 7 个月 · 已过 N3</span></span>
+        </figcaption>
+      </figure>
+      <figure class="voice rv" data-d="3" style="margin:0">
+        <blockquote>最有用的是"知道自己站在哪"。图上山腰那段亮了多少、还黑着多少，比任何进度条都诚实。</blockquote>
+        <figcaption>
+          <span class="av" aria-hidden="true">王</span>
+          <span class="who"><b>王 · 大四学生</b><span>第 11 个月 · 冲 N2</span></span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="cta" id="cta">
+  <div class="seigaiha" aria-hidden="true"></div>
+  <p class="cta-mark" aria-hidden="true">葉</p>
+  <div class="wrap cta-in">
+    <p class="eyebrow rv">开始<span class="jp">はじめよう</span></p>
+    <h2 class="rv" data-d="1">今天，先把第一颗钉子钉下去。</h2>
+    <p class="rv" data-d="2">从一个假名开始。地图会自己长出来。</p>
+    <div class="cta-acts rv" data-d="3">
+      <a class="btn btn--primary" href="#">
+        免费创建我的知识地图
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 10h11M10.5 5l5 5-5 5"/></svg>
+      </a>
+      <a class="btn btn--light" href="#graph">重看图谱演示</a>
+    </div>
+    <p class="cta-note rv" data-d="3">首月全图谱免费 · 无需信用卡 · 随时导出你的学习数据</p>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-in">
+      <div>
+        <a class="brand" href="#top">
+          <span class="hanko" aria-hidden="true">葉</span>
+          <span class="brand-txt"><b>言の葉</b><span>Kotonoha</span></span>
+        </a>
+        <p class="foot-desc">用一张知识图谱学日语。让每个知识点的位置，和它牵连的每一条线，都看得见。</p>
+        <p class="foot-tate" aria-hidden="true">塵も積もれば山となる</p>
+      </div>
+      <div>
+        <h3>学习</h3>
+        <ul>
+          <li><a href="#graph">知识图谱</a></li>
+          <li><a href="#route">分级路线</a></li>
+          <li><a href="#tools">五十音闯关</a></li>
+          <li><a href="#tools">跟读评分</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>关于</h3>
+        <ul>
+          <li><a href="#">团队与理念</a></li>
+          <li><a href="#">学习方法论</a></li>
+          <li><a href="#">学习社区</a></li>
+          <li><a href="#">加入我们</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>支持</h3>
+        <ul>
+          <li><a href="#">帮助中心</a></li>
+          <li><a href="#">联系客服</a></li>
+          <li><a href="#">隐私政策</a></li>
+          <li><a href="#">服务条款</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <svg class="asanoha" viewBox="0 0 1200 14" preserveAspectRatio="none" aria-hidden="true">
+      <g stroke="currentColor" stroke-width="1" fill="none">
+        <line x1="0" y1="7" x2="520" y2="7"/>
+        <line x1="680" y1="7" x2="1200" y2="7"/>
+        <g transform="translate(600,7)">
+          <path d="M0 -6 L0 6 M-5.2 -3 L5.2 3 M-5.2 3 L5.2 -3"/>
+          <circle cx="0" cy="0" r="2.6"/>
+        </g>
+      </g>
+    </svg>
+
+    <div class="foot-bot">
+      <span>© 2026 言の葉 KOTONOHA · 日本語学習プラットフォーム</span>
+      <span class="links"><a href="#">隐私</a><a href="#">条款</a><a href="#">Cookie</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* =========================================================
+     1. 知识图谱数据（28 点 · 五层 · 山形布局）
+     ========================================================= */
+  const NODES = [
+    /* N5 · 假名 */
+    {l:0,s:"あ",t:"あ行 · 母音",k:"kana",n:14},
+    {l:0,s:"か",t:"か行 · 清音",k:"kana",n:11},
+    {l:0,s:"さ",t:"さ行 · 清音",k:"kana",n:10},
+    {l:0,s:"た",t:"た行 · 清音",k:"kana",n:12},
+    {l:0,s:"な",t:"な行 · 鼻音",k:"kana",n:8},
+    {l:0,s:"は",t:"は行 · 清音",k:"kana",n:9},
+    {l:0,s:"ま",t:"ま行 · 清音",k:"kana",n:7},
+    {l:0,s:"や",t:"や行 · 半母音",k:"kana",n:6},
+    {l:0,s:"ら",t:"ら行 · 流音",k:"kana",n:6},
+    /* N4 · 词汇 */
+    {l:1,s:"私",t:"代名詞 · 人称",k:"word",n:12},
+    {l:1,s:"今日",t:"時の名詞",k:"word",n:9},
+    {l:1,s:"食べる",t:"一段動詞 · る形",k:"word",n:16},
+    {l:1,s:"行く",t:"五段動詞 · う形",k:"word",n:14},
+    {l:1,s:"大きい",t:"い形容詞",k:"word",n:8},
+    {l:1,s:"好き",t:"な形容詞",k:"word",n:7},
+    {l:1,s:"学校",t:"場所名詞",k:"word",n:6},
+    {l:1,s:"時間",t:"抽象名詞",k:"word",n:9},
+    {l:1,s:"友達",t:"人間関係",k:"word",n:5},
+    /* N3 · 语法 */
+    {l:2,s:"て形",t:"動詞接続 · 中核",k:"grammar",n:21},
+    {l:2,s:"可能",t:"可能形 · できる",k:"grammar",n:13},
+    {l:2,s:"受身",t:"受身形 · される",k:"grammar",n:11},
+    {l:2,s:"条件",t:"ば / たら / なら",k:"grammar",n:15},
+    {l:2,s:"助詞",t:"は が を に で",k:"grammar",n:24},
+    {l:2,s:"敬語",t:"丁寧語 · 入門",k:"keigo",n:12},
+    /* N2 */
+    {l:3,s:"使役",t:"使役形 · させる",k:"grammar",n:10},
+    {l:3,s:"尊敬",t:"尊敬語 · 謙譲語",k:"keigo",n:14},
+    {l:3,s:"慣用",t:"慣用句 · 身体語",k:"word",n:12},
+    {l:3,s:"接続",t:"接続詞 · 論理",k:"grammar",n:9},
+    /* N1 */
+    {l:4,s:"文語",t:"文語体 · 雅語",k:"keigo",n:7},
+    {l:4,s:"語感",t:"語感 · ニュアンス",k:"word",n:11},
+    {l:4,s:"修辞",t:"修辞 · 文体",k:"grammar",n:6}
+  ];
+
+  const COLOR = {kana:"#1F3A5C", word:"#6E8B99", grammar:"#B83A2C", keigo:"#A8874A"};
+  const LEVEL_Y    = [560, 470, 370, 262, 130];
+  const LEVEL_HALF = [318, 232, 158, 92, 42];
+  const LABEL = ["N5","N4","N3","N2","N1"];
+
+  /* 位置计算 */
+  const layers = [[],[],[],[],[]];
+  NODES.forEach((d,i)=>{ d.i = i; layers[d.l].push(d); });
+  layers.forEach((arr,L)=>{
+    const n = arr.length;
+    arr.forEach((d,i)=>{
+      const half = LEVEL_HALF[L];
+      d.x = n === 1 ? 440 : 440 + (i/(n-1) - 0.5) * 2 * half;
+      d.y = LEVEL_Y[L];
+      d.r = 19 - L * 1.4;
+    });
+  });
+
+  /* 连线：层内相邻成"山脊" + 跨层主边 + 少量副边 */
+  const EDGES = [];
+  const hasEdge = (a,b)=>EDGES.some(e=>(e[0]===a&&e[1]===b)||(e[0]===b&&e[1]===a));
+  layers.forEach(arr=>{
+    for(let i=0;i<arr.length-1;i++) EDGES.push([arr[i].i, arr[i+1].i, .55]);
+  });
+  for(let L=0;L<4;L++){
+    const a = layers[L], b = layers[L+1];
+    b.forEach((bn, bi)=>{
+      const k = Math.round(bi * (a.length-1) / Math.max(1,(b.length-1)));
+      const main = a[k];
+      if(main && !hasEdge(main.i, bn.i)) EDGES.push([main.i, bn.i, .5]);
+      if(bi % 3 === 0){
+        const alt = a[Math.min(a.length-1, k+1)];
+        if(alt && alt!==main && !hasEdge(alt.i, bn.i)) EDGES.push([alt.i, bn.i, .26]);
+      }
+    });
+  }
+
+  /* =========================================================
+     2. 渲染主图谱
+     ========================================================= */
+  const NS = "http://www.w3.org/2000/svg";
+  const svg = document.getElementById("graph-svg");
+  const tip = document.getElementById("tip");
+  const el = (tag, attrs)=>{ const e = document.createElementNS(NS, tag);
+    for(const k in attrs) e.setAttribute(k, attrs[k]); return e; };
+
+  const gEdge = el("g",{});
+  const gNode = el("g",{});
+  svg.appendChild(gEdge); svg.appendChild(gNode);
+
+  /* 山体背景 */
+  svg.insertBefore(el("path",{
+    d:"M440 96 L832 604 Q440 640 48 604 Z",
+    fill:"url(#m-grad)", stroke:"none"
+  }), gEdge);
+  const defs = el("defs",{});
+  defs.innerHTML =
+    '<linearGradient id="m-grad" x1="0" y1="1" x2="0" y2="0">'+
+      '<stop offset="0" stop-color="#1F3A5C" stop-opacity=".07"/>'+
+      '<stop offset="1" stop-color="#1F3A5C" stop-opacity="0"/>'+
+    '</linearGradient>'+
+    '<linearGradient id="m-line" x1="0" y1="1" x2="0" y2="0">'+
+      '<stop offset="0" stop-color="#C8AD78" stop-opacity=".5"/>'+
+      '<stop offset="1" stop-color="#C8AD78" stop-opacity=".22"/>'+
+    '</linearGradient>';
+  svg.insertBefore(defs, svg.firstChild);
+
+  /* 层标 */
+  LEVEL_Y.forEach((y,L)=>{
+    const t = el("text",{x:78,y:y+5,"text-anchor":"end",
+      "font-family":"Cormorant Garamond, serif","font-size":"20","font-weight":"600",
+      fill:"#A8874A","letter-spacing":".06em"});
+    t.textContent = LABEL[L];
+    svg.appendChild(t);
+    svg.appendChild(el("line",{x1:88,y1:y,x2:100,y2:y,stroke:"#C8AD78",
+      "stroke-opacity":".55","stroke-width":"1"}));
+  });
+
+  /* 画连线 */
+  const edgeEls = EDGES.map(([a,b,w])=>{
+    const A = NODES[a], B = NODES[b];
+    const mx = (A.x+B.x)/2 + (A.l===B.l ? 0 : 14);
+    const my = (A.y+B.y)/2 + (A.l===B.l ? 26 : 0);
+    const p = el("path",{
+      d:`M${A.x} ${A.y} Q${mx} ${my} ${B.x} ${B.y}`,
+      fill:"none", stroke:"url(#m-line)", "stroke-width": w*2,
+      class:"edge", "data-a":a, "data-b":b
+    });
+    gEdge.appendChild(p); return p;
+  });
+
+  /* 画节点 */
+  const nodeEls = NODES.map(d=>{
+    const g = el("g",{class:"nm", tabindex:"0", role:"button",
+      "aria-label":`${d.t}，关联 ${d.n} 个知识点`, "data-k":d.k, "data-i":d.i});
+    const c = COLOR[d.k];
+    g.appendChild(el("circle",{cx:d.x,cy:d.y,r:d.r+5,fill:c,opacity:".1","class":"nm-halo"}));
+    g.appendChild(el("circle",{cx:d.x,cy:d.y,r:d.r,fill:"#FFFDF7",stroke:c,
+      "stroke-width":"1.6","class":"nm-dot"}));
+    const t = el("text",{x:d.x,y:d.y+5,"text-anchor":"middle","font-size":
+      (d.s.length>2?9.5:(d.s.length>1?11:13)),fill:c});
+    t.textContent = d.s;
+    g.appendChild(t);
+    gNode.appendChild(g);
+    return g;
+  });
+
+  /* 悬停交互 */
+  function relatedOf(i){
+    const s = new Set();
+    EDGES.forEach(([a,b])=>{ if(a===i) s.add(b); if(b===i) s.add(a); });
+    return s;
+  }
+  function focusNode(i){
+    const rel = relatedOf(i);
+    nodeEls.forEach((g,j)=>g.classList.toggle("is-dim", j!==i && !rel.has(j)));
+    edgeEls.forEach((p,k)=>{
+      const [a,b] = EDGES[k];
+      const on = a===i || b===i;
+      p.classList.toggle("is-lit", on);
+      p.classList.toggle("is-dim", !on);
+    });
+    nodeEls[i].querySelector(".nm-dot").setAttribute("r", 24);
+  }
+  function clearFocus(){
+    nodeEls.forEach(g=>g.classList.remove("is-dim"));
+    edgeEls.forEach(p=>p.classList.remove("is-lit","is-dim"));
+    NODES.forEach((d,i)=>nodeEls[i].querySelector(".nm-dot").setAttribute("r", d.r));
+  }
+  function showTip(i){
+    const d = NODES[i];
+    const board = svg.parentElement.getBoundingClientRect();
+    const r = svg.getBoundingClientRect();
+    const x = r.left - board.left + (d.x/860)*r.width;
+    const y = r.top - board.top + (d.y/640)*r.height;
+    tip.innerHTML = `<b>${d.s} · ${d.t}</b><i>${LABEL[d.l]} · 关联 ${d.n} 个知识点</i>`;
+    tip.style.left = x + "px";
+    tip.style.top = y + "px";
+    tip.classList.add("on");
+  }
+  function hideTip(){ tip.classList.remove("on"); }
+
+  let locked = null;
+  nodeEls.forEach((g,i)=>{
+    g.addEventListener("mouseenter", ()=>{ if(!locked){ focusNode(i); showTip(i);} });
+    g.addEventListener("mouseleave", ()=>{ if(!locked){ clearFocus(); hideTip(); } });
+    g.addEventListener("focus", ()=>{ if(!locked){ focusNode(i); showTip(i);} });
+    g.addEventListener("blur", ()=>{ if(!locked){ clearFocus(); hideTip(); } });
+    g.addEventListener("click", ()=>{
+      if(locked === i){ locked = null; clearFocus(); hideTip(); return; }
+      locked = i; focusNode(i); showTip(i);
+    });
+    g.addEventListener("keydown", e=>{
+      if(e.key==="Enter"||e.key===" "){ e.preventDefault(); g.click(); }
+    });
+  });
+  svg.parentElement.addEventListener("mouseleave", ()=>{ if(!locked){ clearFocus(); hideTip(); }});
+
+  /* 筛选 */
+  const chips = document.querySelectorAll(".chip");
+  chips.forEach(ch=>{
+    ch.addEventListener("click", ()=>{
+      chips.forEach(c=>c.setAttribute("aria-pressed","false"));
+      ch.setAttribute("aria-pressed","true");
+      const k = ch.dataset.k;
+      locked = null; hideTip();
+      nodeEls.forEach((g,i)=>{
+        g.classList.toggle("is-dim", k!=="all" && NODES[i].k!==k);
+        g.querySelector(".nm-dot").setAttribute("r", NODES[i].r);
+      });
+      edgeEls.forEach((p,j)=>{
+        const [a,b] = EDGES[j];
+        const on = k==="all" || NODES[a].k===k || NODES[b].k===k;
+        p.classList.toggle("is-dim", !on);
+        p.classList.remove("is-lit");
+      });
+    });
+  });
+
+  /* =========================================================
+     3. Hero 迷你图
+     ========================================================= */
+  const HN = [
+    [210,500],[150,472],[270,472],[338,500],[82,500],
+    [178,392],[242,392],[300,404],[120,404],[330,372],
+    [186,286],[234,286],[276,296],[152,300],
+    [196,196],[224,196],[262,204],[168,208],
+    [210,108]
+  ];
+  const hg = document.getElementById("hero-nodes");
+  HN.forEach(([x,y],i)=>{
+    const top = i >= 18, mid = i >= 10 && i < 18;
+    const c = top ? "#B83A2C" : (mid ? "#A8874A" : "#1F3A5C");
+    const r = top ? 7 : (mid ? 6 : 5);
+    const ring = el("circle",{cx:x,cy:y,r:r,fill:"none",stroke:c,"stroke-opacity":".5","stroke-width":"1"});
+    if(i % 3 === 0){
+      ring.setAttribute("class","ring");
+      ring.style.animationDelay = (i*0.33)+"s";
+    }
+    hg.appendChild(ring);
+    hg.appendChild(el("circle",{cx:x,cy:y,r:r,fill:"#FFFDF7",stroke:c,"stroke-width":"1.6"}));
+    hg.appendChild(el("circle",{cx:x,cy:y,r:2,fill:c}));
+  });
+  /* 迷你连线 */
+  const HP = [[0,1],[0,2],[1,3],[2,4],[1,5],[2,5],[2,6],[5,8],[6,9],[3,9],
+              [8,10],[9,11],[10,12],[11,12],[11,13],[12,13],
+              [10,14],[12,15],[13,17],[14,18],[15,18],[16,18]];
+  const hgE = el("g",{});
+  HP.forEach(([a,b])=>{
+    const A = HN[a], B = HN[b];
+    hgE.appendChild(el("line",{x1:A[0],y1:A[1],x2:B[0],y2:B[1],
+      stroke:"#A8874A","stroke-opacity":".3","stroke-width":"1"}));
+  });
+  hg.parentNode.insertBefore(hgE, hg);
+
+  /* =========================================================
+     4. 滚动进场 · 吸顶导航
+     ========================================================= */
+  const io = new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); }});
+  },{threshold:.12, rootMargin:"0px 0px -8% 0px"});
+  document.querySelectorAll(".rv").forEach(n=>io.observe(n));
+
+  const nav = document.getElementById("nav");
+  const onScroll = ()=> nav.classList.toggle("is-stuck", window.scrollY > 12);
+  onScroll();
+  window.addEventListener("scroll", onScroll, {passive:true});
+
+})();
+</script>
+</body>
+</html>

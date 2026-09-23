@@ -14,8 +14,8 @@
    同一套令牌：深棕基底 · 青海波暗纹 · 暗底和色
    ============================================================ */
 :root{
-  --bn-0:#1A110C; --bn-1:#241811; --bn-2:#2D1F16; --bn-3:#3D2B1E; --bn-4:#513A28;
-  --cream:#F2E8D5; --cream-2:#D2C3A9; --cream-3:#A0907A;
+  --bn-0:#100B07; --bn-1:#170F0A; --bn-2:#1E140E; --bn-3:#291D15; --bn-4:#3A2A1D;
+  --cream:#F5EFE2; --cream-2:#DCD0B8; --cream-3:#AC9D88;
   --ai:#7FA8D8; --mizu:#7FC0C4; --shu:#E4735C; --shu-2:#CE4B33;
   --kin:#D9B25F; --kin-2:#A8874A; --fuji:#B49BD8;
   --line:rgba(217,178,95,.17); --line-soft:rgba(217,178,95,.09);
@@ -43,18 +43,18 @@ a{color:inherit;text-decoration:none}
 /* ---------- 背景：青海波 + 聚光 + 噪点 ---------- */
 .bg{position:fixed;inset:0;z-index:0;pointer-events:none}
 .bg-seigaiha{
-  position:absolute;inset:0;opacity:.2;background-size:60px 60px;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='%23241811' stroke='%23C9A15F' stroke-opacity='.52' stroke-width='1'%3E%3Ccircle cx='30' cy='0' r='30'/%3E%3Ccircle cx='30' cy='0' r='22'/%3E%3Ccircle cx='30' cy='0' r='14'/%3E%3Ccircle cx='30' cy='0' r='6'/%3E%3Ccircle cx='0' cy='30' r='30'/%3E%3Ccircle cx='0' cy='30' r='22'/%3E%3Ccircle cx='0' cy='30' r='14'/%3E%3Ccircle cx='0' cy='30' r='6'/%3E%3Ccircle cx='60' cy='30' r='30'/%3E%3Ccircle cx='60' cy='30' r='22'/%3E%3Ccircle cx='60' cy='30' r='14'/%3E%3Ccircle cx='60' cy='30' r='6'/%3E%3Ccircle cx='30' cy='60' r='30'/%3E%3Ccircle cx='30' cy='60' r='22'/%3E%3Ccircle cx='30' cy='60' r='14'/%3E%3Ccircle cx='30' cy='60' r='6'/%3E%3C/g%3E%3C/svg%3E");
+  position:absolute;inset:0;opacity:.15;background-size:60px 60px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='%23170F0A' stroke='%23C9A15F' stroke-opacity='.52' stroke-width='1'%3E%3Ccircle cx='30' cy='0' r='30'/%3E%3Ccircle cx='30' cy='0' r='22'/%3E%3Ccircle cx='30' cy='0' r='14'/%3E%3Ccircle cx='30' cy='0' r='6'/%3E%3Ccircle cx='0' cy='30' r='30'/%3E%3Ccircle cx='0' cy='30' r='22'/%3E%3Ccircle cx='0' cy='30' r='14'/%3E%3Ccircle cx='0' cy='30' r='6'/%3E%3Ccircle cx='60' cy='30' r='30'/%3E%3Ccircle cx='60' cy='30' r='22'/%3E%3Ccircle cx='60' cy='30' r='14'/%3E%3Ccircle cx='60' cy='30' r='6'/%3E%3Ccircle cx='30' cy='60' r='30'/%3E%3Ccircle cx='30' cy='60' r='22'/%3E%3Ccircle cx='30' cy='60' r='14'/%3E%3Ccircle cx='30' cy='60' r='6'/%3E%3C/g%3E%3C/svg%3E");
 }
 .bg-glow{
   position:absolute;inset:0;
   background:
-    radial-gradient(48% 44% at 60% 62%, rgba(217,178,95,.09), rgba(217,178,95,0) 66%),
-    radial-gradient(70% 50% at 50% 118%, rgba(206,75,51,.10), rgba(206,75,51,0) 62%),
-    radial-gradient(130% 108% at 50% 44%, rgba(26,17,12,0) 30%, rgba(26,17,12,.55) 76%, rgba(26,17,12,.86) 100%);
+    radial-gradient(48% 44% at 60% 62%, rgba(217,178,95,.05), rgba(217,178,95,0) 66%),
+    radial-gradient(70% 50% at 50% 118%, rgba(206,75,51,.065), rgba(206,75,51,0) 62%),
+    radial-gradient(130% 108% at 50% 44%, rgba(16,11,7,0) 28%, rgba(16,11,7,.58) 74%, rgba(16,11,7,.92) 100%);
 }
 .bg-grain{
-  position:absolute;inset:0;opacity:.38;
+  position:absolute;inset:0;opacity:.3;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.06'/%3E%3C/svg%3E");
 }
 
@@ -62,7 +62,7 @@ a{color:inherit;text-decoration:none}
 .app{position:relative;z-index:2;height:100dvh;display:grid;grid-template-rows:var(--bar) 1fr var(--foot);overflow:hidden}
 .bar{
   display:flex;align-items:center;gap:18px;padding:0 20px;
-  border-bottom:1px solid var(--line-soft);background:rgba(26,17,12,.62);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line-soft);background:rgba(16,11,7,.62);backdrop-filter:blur(10px);
 }
 .brand{display:flex;align-items:center;gap:11px;flex:none}
 .hanko{
@@ -79,17 +79,17 @@ a{color:inherit;text-decoration:none}
 .search{position:relative;flex:1;max-width:420px;min-width:150px}
 .search input{
   width:100%;height:38px;padding:0 34px 0 34px;border-radius:19px;
-  background:rgba(45,31,22,.72);border:1px solid var(--line);color:var(--cream);
+  background:rgba(28,19,14,.72);border:1px solid var(--line);color:var(--cream);
   font-size:13.5px;transition:border-color .22s ease,background-color .22s ease;
 }
 .search input::placeholder{color:var(--cream-3)}
-.search input:focus{outline:none;border-color:rgba(217,178,95,.5);background:rgba(45,31,22,.95)}
+.search input:focus{outline:none;border-color:rgba(217,178,95,.5);background:rgba(28,19,14,.95)}
 .search-ico{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:13px;height:13px;border:1.5px solid var(--kin-2);border-radius:50%;pointer-events:none}
 .search-ico::after{content:"";position:absolute;right:-4px;bottom:-4px;width:5px;height:1.5px;background:var(--kin-2);transform:rotate(45deg)}
 .search kbd{position:absolute;right:11px;top:50%;transform:translateY(-50%);font-size:10.5px;color:var(--cream-3);border:1px solid var(--line);border-radius:3px;padding:1px 5px;pointer-events:none}
 .results{
   position:absolute;left:0;right:0;top:44px;z-index:60;max-height:328px;overflow:auto;
-  background:rgba(36,24,17,.98);border:1px solid var(--line);border-radius:6px;
+  background:rgba(22,15,11,.98);border:1px solid var(--line);border-radius:6px;
   box-shadow:0 24px 48px -20px rgba(0,0,0,.9);padding:5px;display:none;
 }
 .results.on{display:block}
@@ -105,7 +105,7 @@ a{color:inherit;text-decoration:none}
 .results .empty{padding:12px;color:var(--cream-3);font-size:13px}
 
 /* 等级切换 */
-.tabs{display:flex;gap:2px;padding:3px;border:1px solid var(--line-soft);border-radius:6px;flex:none;background:rgba(45,31,22,.5)}
+.tabs{display:flex;gap:2px;padding:3px;border:1px solid var(--line-soft);border-radius:6px;flex:none;background:rgba(28,19,14,.5)}
 .tabs button{
   padding:5px 11px;border-radius:4px;font-size:12.5px;color:var(--cream-3);
   font-family:var(--latin);font-size:14px;letter-spacing:.06em;
@@ -158,10 +158,10 @@ a{color:inherit;text-decoration:none}
 .nm .nl{
   font-family:var(--mincho);font-weight:600;font-size:11px;
   fill:var(--cream-2);text-anchor:middle;paint-order:stroke;
-  stroke:rgba(26,17,12,.92);stroke-width:3.2px;stroke-linejoin:round;
+  stroke:rgba(16,11,7,.92);stroke-width:3.2px;stroke-linejoin:round;
   opacity:0;transition:opacity .28s ease;pointer-events:none;
 }
-.nm.has-label .nl{opacity:.82}
+.nm.has-label .nl{opacity:.88}
 .nm:hover .nl,.nm.is-on .nl,.nm.is-focus .nl{opacity:1}
 .nm:hover .nd,.nm.is-on .nd{stroke-width:2.6}
 .nm.is-on .halo,.nm.is-focus .halo{opacity:.9}
@@ -171,18 +171,18 @@ a{color:inherit;text-decoration:none}
 .nm.is-on .pulse{animation:pulse 2.4s var(--ease) infinite}
 
 /* 山之轮廓与层标 */
-.mtn-body{fill:url(#mtnFill);stroke:rgba(217,178,95,.17);stroke-width:1}
-.mtn-cap{fill:#F2E8D5;fill-opacity:.055;stroke:none}
-.mtn-base{stroke:rgba(168,135,74,.32);stroke-width:1}
-.level-line{stroke:rgba(217,178,95,.085);stroke-width:1;stroke-dasharray:1.5 6}
-.level-tag{font-family:var(--latin);font-size:16px;fill:var(--kin-2);text-anchor:end;letter-spacing:.1em}
-.level-note{font-family:var(--gothic);font-size:10.5px;fill:var(--cream-3);text-anchor:end;letter-spacing:.06em;opacity:.8}
-.level-bar{stroke:rgba(217,178,95,.34);stroke-width:1.5}
+.mtn-body{fill:url(#mtnFill);stroke:rgba(217,178,95,.2);stroke-width:1}
+.mtn-cap{fill:#F2E8D5;fill-opacity:.05;stroke:none}
+.mtn-base{stroke:rgba(168,135,74,.44);stroke-width:1}
+.level-line{stroke:rgba(217,178,95,.12);stroke-width:1;stroke-dasharray:1.5 6}
+.level-tag{font-family:var(--latin);font-size:16px;fill:var(--kin);text-anchor:end;letter-spacing:.1em;paint-order:stroke;stroke:rgba(16,11,7,.86);stroke-width:3.2px;stroke-linejoin:round}
+.level-note{font-family:var(--gothic);font-size:10.5px;fill:var(--cream-2);text-anchor:end;letter-spacing:.06em;opacity:.95;paint-order:stroke;stroke:rgba(16,11,7,.86);stroke-width:2.6px;stroke-linejoin:round}
+.level-bar{stroke:rgba(217,178,95,.44);stroke-width:1.5}
 
 /* ---------- 浮层 dock ---------- */
 .dock{
   position:absolute;z-index:20;border:1px solid var(--line);border-radius:8px;
-  background:rgba(32,21,15,.86);backdrop-filter:blur(12px);
+  background:rgba(20,13,9,.86);backdrop-filter:blur(12px);
   box-shadow:0 22px 46px -26px rgba(0,0,0,.95);
 }
 .dock-head{display:flex;align-items:baseline;gap:10px;padding:12px 14px 10px}
@@ -203,7 +203,7 @@ a{color:inherit;text-decoration:none}
 }
 .chip:hover{background:rgba(217,178,95,.1)}
 .chip[aria-pressed="true"]{background:rgba(217,178,95,.16);color:var(--cream)}
-.chip .sw{width:9px;height:9px;border-radius:50%;flex:none;box-shadow:0 0 0 1px rgba(26,17,12,.7) inset}
+.chip .sw{width:9px;height:9px;border-radius:50%;flex:none;box-shadow:0 0 0 1px rgba(16,11,7,.7) inset}
 .chip .n{margin-left:auto;font-family:var(--latin);font-size:13px;color:var(--cream-3)}
 .chip[aria-pressed="true"] .n{color:var(--kin)}
 
@@ -252,7 +252,7 @@ body.panel-open .legend{opacity:0;transform:translateX(14px);pointer-events:none
 /* 空态 */
 .gate{
   position:absolute;inset:0;z-index:30;display:none;place-items:center;text-align:center;
-  background:rgba(26,17,12,.72);backdrop-filter:blur(3px);
+  background:rgba(16,11,7,.72);backdrop-filter:blur(3px);
 }
 .gate.on{display:grid}
 .gate p{font-size:13.5px;color:var(--cream-2);max-width:34ch}
@@ -262,7 +262,7 @@ body.panel-open .legend{opacity:0;transform:translateX(14px);pointer-events:none
 .panel{
   position:absolute;z-index:50;top:12px;right:12px;bottom:12px;width:var(--panel);
   display:flex;flex-direction:column;border:1px solid var(--line);border-radius:9px;
-  background:rgba(31,20,14,.95);backdrop-filter:blur(16px);
+  background:rgba(19,12,9,.95);backdrop-filter:blur(16px);
   box-shadow:0 30px 70px -30px rgba(0,0,0,.98);
   transform:translateX(calc(100% + 24px));transition:transform .42s var(--ease);
 }
@@ -289,7 +289,7 @@ body.panel-open .legend{opacity:0;transform:translateX(14px);pointer-events:none
 .p-sec h3 em{font-family:var(--latin);font-style:normal;font-size:13px;color:var(--kin-2);letter-spacing:.06em}
 .p-sec h3 .cnt{margin-left:auto;font-family:var(--latin);font-size:13px;color:var(--cream-3)}
 
-.lesson-card{background:rgba(45,31,22,.6);border:1px solid var(--line-soft);border-radius:6px;padding:12px 13px}
+.lesson-card{background:rgba(28,19,14,.6);border:1px solid var(--line-soft);border-radius:6px;padding:12px 13px}
 .lesson-card b{font-family:var(--mincho);font-size:15px;font-weight:600;display:block}
 .lesson-card p{margin:5px 0 0;font-size:12.5px;color:var(--cream-3)}
 .lesson-card .lesson-no{font-family:var(--latin);font-size:12.5px;color:var(--kin);letter-spacing:.1em}
@@ -302,7 +302,7 @@ body.panel-open .legend{opacity:0;transform:translateX(14px);pointer-events:none
 .rel{display:flex;flex-direction:column;gap:5px}
 .rel button{
   display:flex;align-items:baseline;gap:9px;width:100%;text-align:left;padding:8px 10px;
-  border-radius:5px;border:1px solid transparent;background:rgba(45,31,22,.42);
+  border-radius:5px;border:1px solid transparent;background:rgba(28,19,14,.42);
   transition:background-color .2s ease,border-color .2s ease,transform .2s ease;
 }
 .rel button:hover{background:rgba(217,178,95,.13);border-color:var(--line);transform:translateX(2px)}
@@ -339,7 +339,7 @@ body.panel-open .legend{opacity:0;transform:translateX(14px);pointer-events:none
 /* ---------- 页脚 ---------- */
 .foot{
   display:flex;align-items:center;gap:16px;padding:0 20px;border-top:1px solid var(--line-soft);
-  background:rgba(26,17,12,.62);backdrop-filter:blur(10px);
+  background:rgba(16,11,7,.62);backdrop-filter:blur(10px);
   font-size:11.5px;color:var(--cream-3);letter-spacing:.05em;overflow:hidden;white-space:nowrap;
 }
 .foot .sep{width:1px;height:15px;background:var(--line);flex:none}
@@ -449,8 +449,8 @@ body.panel-open .legend{opacity:0;transform:translateX(14px);pointer-events:none
          aria-label="日语知识图谱。130 个知识点按 N5 到 N1 分为五层、排列成富士山轮廓。方向键移动焦点，回车查看详情。">
       <defs>
         <linearGradient id="mtnFill" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"   stop-color="#D9B25F" stop-opacity=".085"/>
-          <stop offset="46%"  stop-color="#D9B25F" stop-opacity=".028"/>
+          <stop offset="0%"   stop-color="#D9B25F" stop-opacity=".07"/>
+          <stop offset="46%"  stop-color="#D9B25F" stop-opacity=".022"/>
           <stop offset="100%" stop-color="#D9B25F" stop-opacity="0"/>
         </linearGradient>
         <radialGradient id="glowHub" cx="50%" cy="50%" r="50%">
@@ -774,7 +774,7 @@ body.panel-open .legend{opacity:0;transform:translateX(14px);pointer-events:none
     var dot = el("circle", {
       class: "nd", cx: 0, cy: 0, r: d.r,
       fill: dom.color, "fill-opacity": d.rel >= HUB_REL_MIN ? .92 : .72,
-      stroke: "#1A110C", "stroke-width": 1.4
+      stroke: "#100B07", "stroke-width": 1.4
     });
     var label = el("text", { class: "nl", x: 0, y: -d.r - 7 });
     label.textContent = d.jp.length > 9 ? d.jp.slice(0, 8) + "…" : d.jp;
